@@ -1,0 +1,155 @@
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default, will be set to flex by JS */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+
+    /* Animation properties for initial state */
+    opacity: 0; /* Start invisible */
+    transition: opacity 0.3s ease-out; /* Smooth fade-in/out for background */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fff;
+    margin: auto; /* Auto margin for centering */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Max width for larger screens */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative; /* Needed for close button positioning */
+
+    /* Animation properties for initial state */
+    transform: translateY(-50px); /* Start slightly above its final position */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth slide and fade */
+    opacity: 0; /* Start invisible */
+}
+
+/* Class added by JavaScript to trigger the "open" state animation */
+.modal.modal-open {
+    opacity: 1; /* Fully visible background */
+}
+
+.modal.modal-open .modal-content {
+    opacity: 1; /* Fully visible content */
+    transform: translateY(0); /* Move to its final position */
+}
+
+
+/* The Close Button */
+.close-button {
+    color: #aaa;
+    float: right; /* Position to the right */
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styling for the open modal button */
+/* Basic body styling for centering the button */
+
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default, will be set to flex by JS */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+
+    /* Animation properties for initial state */
+    opacity: 0; /* Start invisible */
+    transition: opacity 0.3s ease-out; /* Smooth fade-in/out for background */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fff;
+    margin: auto; /* Auto margin for centering */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Max width for larger screens */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative; /* Needed for close button positioning */
+
+    /* Animation properties for initial state */
+    transform: translateY(-50px); /* Start slightly above its final position */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth slide and fade */
+    opacity: 0; /* Start invisible */
+}
+
+/* Class added by JavaScript to trigger the "open" state animation */
+.modal.modal-open {
+    opacity: 1; /* Fully visible background */
+}
+
+.modal.modal-open .modal-content {
+    opacity: 1; /* Fully visible content */
+    transform: translateY(0); /* Move to its final position */
+}
+
+
+/* The Close Button */
+.close-button {
+    color: #aaa;
+    float: right; /* Position to the right */
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styling for the open modal button */
+#openModalBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #74C476;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    
+}
+
+#openModalBtn:hover {
+    color: #74C476;
+    background-color: white;
+    border: solid 1px #74C476;
+    border-radius: 10px;
+ 
+}

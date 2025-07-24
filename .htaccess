@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Skip existing files
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Skip existing directories
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# SKIP PHP FILES from being routed
+RewriteCond %{REQUEST_URI} !\.php$
+
+# Route the rest to router
+RewriteRule ^(.+)$ router/router.php?page=$1 [QSA,L]

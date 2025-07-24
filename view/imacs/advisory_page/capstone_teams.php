@@ -1,0 +1,202 @@
+<?php
+require_once __DIR__ . '/../../../actions/db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserController.php';
+
+$current_user_statement = $pdo->query("SELECT * FROM users WHERE user_id = " . (int)$id); // Example, assuming $id is globally available and safe
+$current_user = $current_user_statement->fetch(PDO::FETCH_ASSOC);
+$is_adviser = ($current_user['user_type'] === 'faculty');
+
+
+$query = "
+    SELECT 
+        t.team_id,
+        t.team_name,
+        t.capstone_title,
+        t.capstone_type,
+        CONCAT(a.first_name, ' ', a.last_name) AS adviser_name,
+        GROUP_CONCAT(
+            CONCAT(m.first_name, ' ', m.last_name, 
+                    CASE WHEN tm.role = 'leader' THEN ' (Leader)' ELSE '' END)
+            SEPARATOR ', '
+        ) AS members
+    FROM teams t
+    JOIN users a ON t.adviser_id = a.user_id
+    JOIN team_members tm ON t.team_id = tm.team_id
+    JOIN users m ON tm.user_id = m.user_id
+    " . ($is_adviser ? "WHERE t.adviser_id = ?" : "WHERE tm.user_id = ?") . "
+    GROUP BY t.team_id
+    ORDER BY t.team_name
+";
+
+$stmt = $pdo->prepare($query);
+// Ensure $id is defined. It should come from verify-users.php or fetchUserController.php
+$stmt->execute([$id]); // Assuming $id is already defined here.
+$teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//FETCH TEAMS
+// Check if 'team_id' is set in $_GET
+$teamd = isset($_GET['id']) ? $_GET['id'] : null;
+
+$team_view = []; // Initialize to an empty array
+
+// Only execute this query if team_id is provided in the URL
+if ($teamd !== null) {
+    $view_teams = "
+        SELECT *,
+        COALESCE(CONCAT(adv.first_name,' ', adv.last_name), 'No Adviser') AS adviser_name,
+        COALESCE(CONCAT(tech.first_name,' ', tech.last_name), 'No Technical') AS technical_name,
+        COALESCE(CONCAT(chair.first_name,' ', chair.last_name), 'No Chairperson') AS chairman_name,
+        COALESCE(CONCAT(major.first_name,' ', major.last_name), 'No Major') AS major_name,
+        COALESCE(CONCAT(minor.first_name,' ', minor.last_name), 'No Minor') AS minor_name,
+        COALESCE(CONCAT(panel.first_name,' ', panel.last_name), 'No Panelist') AS panelist_name,
+        GROUP_CONCAT(DISTINCT CONCAT(m.first_name, ' ', m.last_name) SEPARATOR ', ') AS members
+        FROM teams t
+        LEFT JOIN
+            `users` adv ON t.adviser_id = adv.user_id
+        LEFT JOIN
+            `users` tech ON t.technical_id = tech.user_id
+        LEFT JOIN
+            `users` chair ON t.chairperson_id = chair.user_id
+        LEFT JOIN
+            `users` major ON t.major_id = major.user_id
+        LEFT JOIN
+            `users` minor ON t.minor_id = minor.user_id
+        LEFT JOIN
+            `users` panel ON t.panelist_id = panel.user_id
+        LEFT JOIN
+            `team_members` tm ON t.team_id = tm.team_id
+        LEFT JOIN
+            `users` m ON tm.user_id = m.user_id
+        WHERE t.adviser_id = ? AND t.team_id = ?
+        GROUP BY
+            t.team_id";
+
+    $stmt_teams = $pdo->prepare($view_teams);
+    // Corrected: Pass $id and $teamd as separate elements in the array
+    $stmt_teams->execute([$id, $teamd]);
+    $team_view = $stmt_teams->fetchAll(PDO::FETCH_ASSOC);
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/component.css">
+    <script>
+        //jquery codes
+
+        $(document).ready(function(){
+
+            $("openModalBtn").click(function(){
+                $.get()
+            });
+        });
+    </script>
+    <title>IMACS FACULTY | WORKSPACE</title>
+</head>
+
+    <style>
+        .table-container {
+            margin: 30px auto;
+            max-width: 1200px;
+        }
+        .team-title {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .leader {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+    </style>
+<body>
+    
+    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/navbar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/fsidebar.php'; ?>
+    <br>
+
+    <div class="content-page">
+        <div class="container-fluid">
+        <div class="row">            
+           <div class="col-md-10">
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
+                        <?php unset($_SESSION['success']); ?>
+                    <?php endif; ?>
+                <div class="table-container">
+                    <h2 class="mb-4"><?= $is_adviser ? 'Your Advised Teams' : 'Your Capstone Team' ?></h2>
+                    
+                    <?php if (empty($teams)): ?>
+                        <div class="alert alert-info">
+                            <?= $is_adviser ? 'You are not currently advising any teams.' : 'You are not currently assigned to any team.' ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Team Name</th>
+                                        <th>Capstone Title</th>
+                                        <th>Type</th>
+                                        <th>Adviser</th>
+                                        <th>Team Members</th>
+                                        <?php if ($is_adviser): ?>
+                                            <th>Actions</th>
+                                        <?php endif; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($teams as $team): ?>
+                                        <tr>
+                                            <td class="team-title"><?= htmlspecialchars($team['team_name']) ?></td>
+                                            <td><?= htmlspecialchars($team['capstone_title']) ?></td>
+                                            <td><?= htmlspecialchars($team['capstone_type']) ?></td>
+                                            <td><?= htmlspecialchars($team['adviser_name']) ?></td>
+                                            <td>
+                                                <?php 
+                                                $members = explode(', ', $team['members']);
+                                                foreach ($members as $member) {
+                                                    if (strpos($member, '(Leader)') !== false) {
+                                                        echo '<span class="leader">' . htmlspecialchars($member) . '</span>,<br>';
+                                                    } else {
+                                                        echo htmlspecialchars($member) . '<br>';
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <?php if ($is_adviser): ?>
+                                                <td>
+                                                    <a href="edit_team.php?id=<?= htmlspecialchars($team['team_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+                                                    <a href="/imacs-capstone_teams?id=<?= htmlspecialchars($team['team_id']) ?>" class="btn btn-sm btn-info" id="openModalBtn">View</a>
+                                                </td>
+                                            <?php endif; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($is_adviser): ?>
+                        <div class="mt-4">
+                            <a href="imacs-add_teams" class="btn btn-success">Create New Team</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src="../../js/components.js"></script>
+    <script src="../../../js/accordion.js"></script>
+</body>
+</html>

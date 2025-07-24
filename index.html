@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Filter, Paginate, Sort</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      width: 300px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #58bc82;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .pagination button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background-color: #eee;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: #58bc82;
+      color: white;
+      border-color: #58bc82;
+    }
+
+    .sort-arrow {
+      margin-left: 6px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Users Table</h2>
+<input type="text" id="searchInput" placeholder="Search...">
+
+<table id="dataTable">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th id="usernameHeader">Username <span id="sortIcon">↕</span></th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    <!-- Rows inserted by JS -->
+  </tbody>
+</table>
+
+<div class="pagination" id="pagination"></div>
+
+<script>
+  const rowsPerPage = 5;
+  let currentPage = 1;
+  let sortDirection = 'asc'; // default ascending
+  let data = [];
+
+  for (let i = 1; i <= 35; i++) {
+    data.push({
+      id: i,
+      username: `user${i}`,
+      type: i % 2 === 0 ? 'student' : 'faculty'
+    });
+  }
+
+  const tableBody = document.getElementById("tableBody");
+  const pagination = document.getElementById("pagination");
+  const searchInput = document.getElementById("searchInput");
+  const usernameHeader = document.getElementById("usernameHeader");
+  const sortIcon = document.getElementById("sortIcon");
+
+  function displayTable(filteredData, page = 1) {
+    tableBody.innerHTML = '';
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const pageData = filteredData.slice(start, end);
+
+    pageData.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.username}</td>
+        <td>${row.type}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+
+    renderPagination(filteredData.length, page);
+  }
+
+  function renderPagination(totalRows, activePage) {
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      if (i === activePage) btn.classList.add("active");
+      btn.onclick = () => {
+        currentPage = i;
+        displayTable(getFilteredAndSortedData(), i);
+      };
+      pagination.appendChild(btn);
+    }
+  }
+
+  function getFilteredAndSortedData() {
+    const query = searchInput.value.toLowerCase();
+
+    let filtered = data.filter(row =>
+      Object.values(row).some(value =>
+        String(value).toLowerCase().includes(query)
+      )
+    );
+
+    filtered.sort((a, b) => {
+      const nameA = a.username.toLowerCase();
+      const nameB = b.username.toLowerCase();
+      if (sortDirection === 'asc') {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    });
+
+    return filtered;
+  }
+
+  searchInput.addEventListener("input", () => {
+    currentPage = 1;
+    displayTable(getFilteredAndSortedData(), currentPage);
+  });
+
+  usernameHeader.addEventListener("click", () => {
+    sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    sortIcon.textContent = sortDirection === 'asc' ? '↑' : '↓';
+    displayTable(getFilteredAndSortedData(), currentPage);
+  });
+
+  // Initial render
+  displayTable(data, currentPage);
+</script>
+
+</body>
+</html>
