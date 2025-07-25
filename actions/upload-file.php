@@ -37,14 +37,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document']) && $team
             $newVersion = $major . '.' . $minor;
         }
 
-        $uploadDir = __DIR__ . '/../uploads/';
-        $filepath = $uploadDir . $file_name; // Corrected from undefined $fileName
+        $uploadDir = __DIR__ . '/../uploads/team_' . $team['team_id'] . '/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true); // create directory if it doesn't exist
+        }
+        
+        $pathInfo = pathinfo($file_name);
+        $versionedFileName = $pathInfo['filename'] . '_v' . $newVersion . '.' . $pathInfo['extension'];
+        $filepath = $uploadDir . $versionedFileName;
+
 
         if (!move_uploaded_file($file['tmp_name'], $filepath)) {
             throw new Exception("Failed to save file");
         }
 
-        // Save to database
+        // Insert file metadata into the database
         $stmt = $pdo->prepare("
             INSERT INTO documents (
                 team_id, 
@@ -63,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document']) && $team
             $team['team_id'],
             $id,
             htmlspecialchars($_POST['document_name'] ?? $team['capstone_title']),
-            '/uploads/team_' . $team['team_id'] . '/' . $file_name,
+            '/uploads/team_' . $team['team_id'] . '/' . $versionedFileName,
             $file['type'],
             $file['size'],
             $newVersion,
