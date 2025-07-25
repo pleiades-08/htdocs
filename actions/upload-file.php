@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document']) && $team
         $pathInfo = pathinfo($file_name);
         $versionedFileName = $pathInfo['filename'] . '_v' . $newVersion . '.' . $pathInfo['extension'];
         $filepath = $uploadDir . $versionedFileName;
-
+        $documentName = htmlspecialchars($_POST['document_name'] ?? $team['capstone_title']) . ' (v' . $newVersion . ')';
 
         if (!move_uploaded_file($file['tmp_name'], $filepath)) {
             throw new Exception("Failed to save file");
@@ -61,21 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document']) && $team
                 file_type, 
                 file_size, 
                 version,
-                status,
-                file_name
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
         
         $stmt->execute([
             $team['team_id'],
             $id,
-            htmlspecialchars($_POST['document_name'] ?? $team['capstone_title']),
+            $documentName,
             '/uploads/team_' . $team['team_id'] . '/' . $versionedFileName,
             $file['type'],
             $file['size'],
             $newVersion,
-            'Submitted',
-            $file_name
+            'Submitted'
         ]);
 
         $_SESSION['success'] = "File uploaded successfully (v$newVersion)";

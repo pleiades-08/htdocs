@@ -79,7 +79,7 @@ try{
                                 <td><?= $row['version'] ?></td>
                                 <td><?= $row['status'] ?></td>
                                 <td>
-                                <a href="../../controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_name'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
+                                <a href="../../controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
                                     View
                                 </a></td>
                             </td>

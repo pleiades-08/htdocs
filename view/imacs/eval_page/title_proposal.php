@@ -15,7 +15,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../../css/view-pdf.css">
     <title>IMACS | Title Proposal</title>
 </head>
@@ -39,12 +38,11 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
         <div class="col-md-3"></div>
         <center><h2 style="margin: 10px 0px 10px 0px">Capstone Document Evaluation</h2></center>
         <hr>
-        
         <div class="pdf-section">
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
                     
             <script>
-                const url = '<?= htmlspecialchars($filepath) ?>';
+                const url = '<?= htmlspecialchars($file_path) ?>';
 
                 const pdfjsLib = window['pdfjs-dist/build/pdf'];
                 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
@@ -292,15 +290,15 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
                             <?php endif; ?>
                         </tbody>
                     </table>
-                    <?php
-                    exit();
-                    ?>
                 </div>
             </div>
         </div>  
     </div>
 </div>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="../../../js/insert_feedback.js"></script>
 <script src="../../../js/view_feedback.js"></script>
