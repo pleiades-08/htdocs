@@ -1,84 +1,64 @@
-// custom_modal.js
 
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('customTeamDetailsModal');
-    const modalBody = document.getElementById('customTeamDetailsBody');
-    const closeButtons = document.querySelectorAll('.custom-close-button'); // Select all close buttons
-    const openModalButtons = document.querySelectorAll('.open-custom-modal-btn');
+// Get the modal
+var modal = document.getElementById("myModal");
 
-    // Function to open the modal
-    function openModal() {
-        modal.style.display = 'flex'; // Use flex to center the modal content
+// Get the button that opens the modal
+var openBtn = document.getElementById("openModalBtn");
+
+// Get the <span> element that closes the modal
+var closeBtn = document.getElementsByClassName("close-button")[0];
+
+// Get the form elements
+var commentsInput = document.getElementById("commentsInput");
+var suggestionsInput = document.getElementById("suggestionsInput");
+var revisionsInput = document.getElementById("revisionsInput");
+var remarksSelect = document.getElementById("remarks"); // Get the select element
+
+// Get the elements within the modal where feedback will be displayed
+var modalComments = document.getElementById("modalComments");
+var modalSuggestions = document.getElementById("modalSuggestions");
+var modalRevisions = document.getElementById("modalRevisions");
+var modalStatus = document.getElementById("modalStatus"); // New element for status
+
+// Get the form itself to attach a submit listener
+var feedbackForm = document.getElementById("feedbackForm");
+
+    // When the user clicks the "Submit" button (which now opens the modal)
+    openBtn.onclick = function(event) {
+    // Prevent the form from submitting immediately
+    // No need for event.preventDefault() here as the button type is "button"
+
+    // Populate the modal with current form values
+    modalComments.textContent = commentsInput.value || "No comments entered.";
+    modalSuggestions.textContent = suggestionsInput.value || "No suggestions entered.";
+    modalRevisions.textContent = revisionsInput.value || "No revisions required.";
+    modalStatus.textContent = remarksSelect.options[remarksSelect.selectedIndex].text; // Get the displayed text of the selected option
+
+    modal.style.display = "flex"; // Make it visible (but still transparent)
+    // Use a tiny timeout to allow the browser to render display:flex before applying opacity/transform
+    setTimeout(() => {
+        modal.classList.add("modal-open"); // Trigger the CSS animation
+    }, 10); // A small delay, 0ms often works too
     }
 
-    // Function to close the modal
+    // Function to close the modal with animation
     function closeModal() {
-        modal.style.display = 'none';
-        modalBody.innerHTML = '<p>Loading team details...</p>'; // Reset content on close
+    modal.classList.remove("modal-open"); // Trigger the CSS reverse animation
+    // Listen for the end of the transition
+    modal.addEventListener('transitionend', function handler() {
+        modal.style.display = "none"; // Hide it completely after animation
+        modal.removeEventListener('transitionend', handler); // Remove the listener
+    }, { once: true }); // Ensure the listener runs only once
     }
 
-    // Add event listeners for closing the modal
-    closeButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
-    });
-
-    // Close modal when clicking outside of the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    });
-
-    // Function to fetch team details via AJAX
-    async function fetchTeamDetails(teamId) {
-        modalBody.innerHTML = '<p>Loading team details...</p>'; // Show loading message
-        openModal(); // Open modal immediately with loading message
-
-        try {
-            // Adjust the path to your new PHP endpoint
-            const response = await fetch('/repository-kld/actions/fetch_team_details.php', {
-                method: 'POST', // Use POST to send data securely
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'team_id=' + encodeURIComponent(teamId)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            if (data.success && data.team) {
-                const team = data.team;
-                let htmlContent = `
-                    <div class="detail-row"><div class="detail-label">Team Name:</div><div class="detail-value">${team.team_name ? team.team_name : 'N/A'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Capstone Title:</div><div class="detail-value">${team.capstone_title ? team.capstone_title : 'N/A'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Capstone Type:</div><div class="detail-value">${team.capstone_type ? team.capstone_type : 'N/A'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Adviser:</div><div class="detail-value">${team.adviser_name ? team.adviser_name : 'No Adviser'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Technical:</div><div class="detail-value">${team.technical_name ? team.technical_name : 'No Technical'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Chairman:</div><div class="detail-value">${team.chairman_name ? team.chairman_name : 'No Chairperson'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Major Discipline:</div><div class="detail-value">${team.major_name ? team.major_name : 'No Major'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Minor Discipline:</div><div class="detail-value">${team.minor_name ? team.minor_name : 'No Minor'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Panelist:</div><div class="detail-value">${team.panelist_name ? team.panelist_name : 'No Panelist'}</div></div>
-                    <div class="detail-row"><div class="detail-label">Members:</div><div class="detail-value">${team.members ? team.members : 'No Members'}</div></div>
-                `;
-                modalBody.innerHTML = htmlContent;
-            } else {
-                modalBody.innerHTML = '<p>Error: Team details not found or an issue occurred.</p>';
-            }
-        } catch (error) {
-            console.error('Error fetching team details:', error);
-            modalBody.innerHTML = '<p>Failed to load team details. Please try again.</p>';
-        }
+    // When the user clicks on <span> (x), close the modal
+    closeBtn.onclick = function() {
+    closeModal();
     }
 
-    // Add event listeners to all "View" buttons
-    openModalButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const teamId = this.getAttribute('data-team-id');
-            fetchTeamDetails(teamId);
-        });
-    });
-});
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+    }

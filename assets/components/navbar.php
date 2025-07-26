@@ -1,33 +1,12 @@
-<nav class="navbar">
-  <div class="navbar-container">
-    <!-- Brand/Logo -->
-    <a href="/" class="navbar-brand">MySite</a>
-    
-    <!-- Mobile Toggle Button -->
-     <div>
-        <button class="navbar-toggler" aria-label="Toggle navigation">
-        <span class="toggler-icon"></span>
-        <span class="toggler-icon"></span>
-        <span class="toggler-icon"></span>
-        </button>
+<div class="navbar" id="navbar">
+    <div class="logo">
+        <img src="../../assets/img/kld-logo.png" alt="" class="kld-logo">
+        <b><h4 style="font-weight: 600;">IMACS Faculty</h4></b>
     </div>
-    
-    <!-- Navigation Links -->
-    <div class="navbar-collapse" style="display: contents;">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a href="/" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="/about" class="nav-link">upload</a>
-        </li>
-        <li class="nav-item">
-          <a href="/contact" class="nav-link">Documents</a>
-        </li>
-        <li>
-             <img src="../../assets/img/profile.png" alt="" class="nav-logo">
-        </li>
-      </ul>
+    <div class="nav-links">
+        <a href="/imacs-home" class="nav-link">Home</a>
+        <a href="/imacs-upload.php" class="nav-link">Upload</a>
+        <a href="/imacs-documents" class="nav-link">Documents</a>
+        <img src="../../assets/img/profile.png" alt="" class="nav-logo">
     </div>
-  </div>
-</nav>
+</div>

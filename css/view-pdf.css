@@ -2,37 +2,12 @@
 
 
 *{
-border: 0;
-padding: 0;
-font-family: "Poppins", sans-serif;
+  border: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 
-
-.navbar {
-background-color: #2d7617;
-color: white;
-padding: 15px 20px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-align-content: center;
-}
-
-.navbar .brand {
-font-size: 20px;
-font-weight: bold;
-}
-
-.navbar a {
-color: white;
-text-decoration: none;
-font-size: 16px;
-}
-
-.navbar a:hover {
-text-decoration: underline;
-}
 
 #pdf-viewer {
 width: 100%;
@@ -46,26 +21,6 @@ padding: 8px;
 }
 
 
-
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    margin-top: 10vh;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
 
 
 .form-container {
@@ -141,64 +96,7 @@ iframe{
   width: 150px;
   z-index: 1000;   /* Ensure it stays above other content */
 }
-.kld-logo{
-  width: 65px;
-  height: 65px;
-}
-  .navbar {
-  display: flex;
-  height: 10dvh;
-  width: 100dvw;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #EDF8E9;
-  padding: 10px 20px;
-  color: white;
-}
-.logo{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
-.nav-logo{
-  height: 50px;
-  width: 50px;
-}
-.navbar .logo {
-  color: #000;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.navbar .nav-links {
-  display: flex;
-  gap: 15px;
-}
-
-.navbar .nav-links a {
-  color: rgb(1, 1, 1);
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-}
-
-.navbar .nav-links a:hover {
-  background-color: #74C476;
-  color: white;
-}
-
-.navbar .nav-logo:hover {
-  background-color: #616762;
-  border-radius: 50%;
-  color: white;
-}
-.nav-link{
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  
-}
 .sidebar {
   height: 100vh;
   width: 15vw;
@@ -238,15 +136,6 @@ iframe{
 .upload{
   margin-top: 10px;
 }
-
-
-#navbar {
-top: 0;
-width: 100%;
-transition: top 0.3s;
-z-index: 1000;
-}
-
 
 #pdf-container{
 display: flex;
@@ -480,126 +369,67 @@ text-decoration: none;
 
 /* Modal styles */
 .modal {
-display: none; /* Hidden by default, will be set to flex by JS */
-position: fixed; /* Stay in place */
-z-index: 1; /* Sit on top */
-left: 0;
-top: 0;
-width: 100%; /* Full width */
-height: 100%; /* Full height */
-overflow: auto; /* Enable scroll if needed */
-background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-justify-content: center; /* Center content horizontally */
-align-items: center; /* Center content vertically */
-
-/* Animation properties for initial state */
-opacity: 0; /* Start invisible */
-transition: opacity 0.3s ease-out; /* Smooth fade-in/out for background */
+  display: none; 
+  position: fixed;
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
+  justify-content: center; 
+  align-items: center;
+  opacity: 0; 
+  transition: opacity 0.3s ease-out; 
 }
-
-/* Modal Content/Box */
-.modal-content {
-background-color: #fff;
-margin: auto; /* Auto margin for centering */
-padding: 20px;
-border: 1px solid #888;
-width: 80%; /* Could be more or less, depending on screen size */
-max-width: 500px; /* Max width for larger screens */
-border-radius: 8px;
-box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-position: relative; /* Needed for close button positioning */
-
-/* Animation properties for initial state */
-transform: translateY(-50px); /* Start slightly above its final position */
-transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth slide and fade */
-opacity: 0; /* Start invisible */
-}
-
-/* Class added by JavaScript to trigger the "open" state animation */
-.modal.modal-open {
-opacity: 1; /* Fully visible background */
-}
-
-.modal.modal-open .modal-content {
-opacity: 1; /* Fully visible content */
-transform: translateY(0); /* Move to its final position */
-}
-
-
-/* The Close Button */
-.close-button {
-color: #aaa;
-float: right; /* Position to the right */
-font-size: 28px;
-font-weight: bold;
-position: absolute;
-top: 10px;
-right: 20px;
-}
-
-.close-button:hover,
-.close-button:focus {
-color: #000;
-text-decoration: none;
-cursor: pointer;
-}
-
-/* Styling for the open modal button */
-/* Basic body styling for centering the button */
 
 
 /* Modal styles */
 .modal {
-display: none; /* Hidden by default, will be set to flex by JS */
-position: fixed; /* Stay in place */
-z-index: 1; /* Sit on top */
-left: 0;
-top: 0;
-width: 100%; /* Full width */
-height: 100%; /* Full height */
-overflow: auto; /* Enable scroll if needed */
-background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-justify-content: center; /* Center content horizontally */
-align-items: center; /* Center content vertically */
-
-/* Animation properties for initial state */
-opacity: 0; /* Start invisible */
-transition: opacity 0.3s ease-out; /* Smooth fade-in/out for background */
+  display: none;
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center; 
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
 }
 
-/* Modal Content/Box */
 .modal-content {
 background-color: #fff;
-margin: auto; /* Auto margin for centering */
+margin: auto; 
 padding: 20px;
 border: 1px solid #888;
-width: 80%; /* Could be more or less, depending on screen size */
-max-width: 500px; /* Max width for larger screens */
+width: 80%; 
+max-width: 500px; 
 border-radius: 8px;
 box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-position: relative; /* Needed for close button positioning */
-
-/* Animation properties for initial state */
-transform: translateY(-50px); /* Start slightly above its final position */
-transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth slide and fade */
-opacity: 0; /* Start invisible */
+position: relative; 
+transform: translateY(-50px); 
+transition: transform 0.3s ease-out, opacity 0.3s ease-out; 
+opacity: 0; 
 }
 
-/* Class added by JavaScript to trigger the "open" state animation */
 .modal.modal-open {
-opacity: 1; /* Fully visible background */
+opacity: 1; 
 }
 
 .modal.modal-open .modal-content {
-opacity: 1; /* Fully visible content */
-transform: translateY(0); /* Move to its final position */
+opacity: 1; 
+transform: translateY(0); 
 }
-
 
 /* The Close Button */
 .close-button {
 color: #aaa;
-float: right; /* Position to the right */
+float: right; 
 font-size: 28px;
 font-weight: bold;
 position: absolute;
@@ -623,7 +453,6 @@ background-color: #74C476;
 color: white;
 border: none;
 border-radius: 10px;
-
 }
 
 #openModalBtn:hover {
@@ -634,7 +463,6 @@ border-radius: 10px;
 
 }
 /* NEW STYLE EVAL*/
-
 .evalcon2 th{
 padding:10px;
 background:#74c476;
@@ -665,20 +493,11 @@ padding-right:10px;
 border-radius:5px;
 }
 
-
 /* NEW STYLE EVAL*/
 .loading {
 color: #666;
 font-style: italic;
 padding: 10px;
-}
-
-.error {
-color: #dc3545;
-background: #f8d7da;
-padding: 10px;
-border-radius: 4px;
-margin: 5px 0;
 }
 
 .no-data {
