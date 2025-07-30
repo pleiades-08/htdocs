@@ -26,16 +26,15 @@ $query = "
     JOIN users m ON tm.user_id = m.user_id
     " . ($is_adviser ? "WHERE t.adviser_id = ?" : "WHERE tm.user_id = ?") . "
     GROUP BY t.team_id
-    ORDER BY t.team_name
+    ORDER BY t.team_id ASC
 ";
 
 $stmt = $pdo->prepare($query);
-// Ensure $id is defined. It should come from verify-users.php or fetchUserController.php
 $stmt->execute([$id]); // Assuming $id is already defined here.
 $teams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//FETCH TEAMS
-// Check if 'team_id' is set in $_GET
+
+
 $teamd = isset($_GET['id']) ? $_GET['id'] : null;
 
 $team_view = []; // Initialize to an empty array
@@ -70,7 +69,9 @@ if ($teamd !== null) {
             `users` m ON tm.user_id = m.user_id
         WHERE t.adviser_id = ? AND t.team_id = ?
         GROUP BY
-            t.team_id";
+            t.team_id
+        ORDER BY t.team_id ASC
+            ";
 
     $stmt_teams = $pdo->prepare($view_teams);
     // Corrected: Pass $id and $teamd as separate elements in the array
@@ -104,6 +105,9 @@ if ($teamd !== null) {
             font-weight: bold;
             color: #0d6efd;
         }
+        .custome-modal-width{
+            max-width: 800px;
+        }
     </style>
 <body>
     
@@ -114,108 +118,129 @@ if ($teamd !== null) {
     <div class="content-page">
 
     <!-- Modal -->
-    <div class="modal fade mt-5" id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="teamModalLabel">Team Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                <div class="mb-3">
-                    <label for="teamName" class="form-label">Team Name</label>
-                    <input type="text" class="form-control" id="teamName" value="Team Innovators" readonly>
+        <div class="modal fade  " id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
+            <div class="modal-dialog custome-modal-width">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teamModalLabel">Team Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label for="members" class="form-label">Members</label>
-                    <textarea class="form-control" id="members" rows="3" readonly>John, Jane, Alex, Sam</textarea>
+                <div class="modal-body">
+                    <form>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Capstone Title</label>
+                        <input type="text" class="form-control" id="projectTitle" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Capstone Adviser</label>
+                        <input type="text" class="form-control" id="adviserName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Technical Adviser</label>
+                        <input type="text" class="form-control" id="technicalName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Chairperson</label>
+                        <input type="text" class="form-control" id="chairName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Major Discipline</label>
+                        <input type="text" class="form-control" id="majorName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Minor Discipline</label>
+                        <input type="text" class="form-control" id="minorName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">Panelist</label>
+                        <input type="text" class="form-control" id="panelistName" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="members" class="form-label">Members</label>
+                        <textarea class="form-control" id="members" rows="3" readonly></textarea>
+                    </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="projectTitle" class="form-label">Project Title</label>
-                    <input type="text" class="form-control" id="projectTitle" value="Smart Campus System" readonly>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid">
-        <div class="row">            
-            <div class="col-md-10">
-                    <?php if (isset($_SESSION['success'])): ?>
-                        <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
-                        <?php unset($_SESSION['success']); ?>
-                    <?php endif; ?>
-                <div class="table-container">
-                    <h2 class="mb-4"><?= $is_adviser ? 'Your Advised Teams' : 'Your Capstone Team' ?></h2>
-                    
-                    <?php if (empty($teams)): ?>
-                        <div class="alert alert-info">
-                            <?= $is_adviser ? 'You are not currently advising any teams.' : 'You are not currently assigned to any team.' ?>
-                        </div>
-                    <?php else: ?>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Team Name</th>
-                                        <th>Capstone Title</th>
-                                        <th>Type</th>
-                                        <th>Adviser</th>
-                                        <th>Team Members</th>
-                                        <?php if ($is_adviser): ?>
-                                            <th>Actions</th>
-                                        <?php endif; ?>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($teams as $team): ?>
-                                        <tr>
-                                            <td class="team-title"><?= htmlspecialchars($team['team_name']) ?></td>
-                                            <td><?= htmlspecialchars($team['capstone_title']) ?></td>
-                                            <td><?= htmlspecialchars($team['capstone_type']) ?></td>
-                                            <td><?= htmlspecialchars($team['adviser_name']) ?></td>
-                                            <td>
-                                                <?php 
-                                                $members = explode(', ', $team['members']);
-                                                foreach ($members as $member) {
-                                                    if (strpos($member, '(Leader)') !== false) {
-                                                        echo '<span class="leader">' . htmlspecialchars($member) . '</span>,<br>';
-                                                    } else {
-                                                        echo htmlspecialchars($member) . '<br>';
-                                                    }
-                                                }
-                                                ?>
-                                            </td>
-                                            <?php if ($is_adviser): ?>
-                                                <td>
-                                                    <a href="edit_team.php?id=<?= htmlspecialchars($team['team_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-info open-modal-btn" data-bs-toggle="modal" data-bs-target="#teamModal">View</a>
-                                                </td>
-                                            <?php endif; ?>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php endif; ?>
-                    
-                    <?php if ($is_adviser): ?>
-                        <div class="mt-4">
-                            <a href="imacs-add_teams" class="btn btn-success">Create New Team</a>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
+        <div class="container">
+            <h2 class="mb-4"><?= $is_adviser ? 'Your Advised Teams' : 'Your Capstone Team' ?></h2>
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
+            
+            <?php if (empty($teams)): ?>
+                <div class="alert alert-info">
+                    <?= $is_adviser ? 'You are not currently advising any teams.' : 'You are not currently assigned to any team.' ?>
+                </div>
+            <?php else: ?>
+                <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Team ID</th>
+                            <th>Team Name</th>
+                            <th>Capstone Title</th>
+                            <th>Type</th>
+                            <th>Adviser</th>
+                            <th>Team Members</th>
+                            <?php if ($is_adviser): ?>
+                                <th>Actions</th>
+                            <?php endif; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($teams as $team): ?>
+                            <tr>
+                                <td class="team-id"><?= htmlspecialchars($team['team_id']) ?></td>
+                                <td class="team-title"><?= htmlspecialchars($team['team_name']) ?></td>
+                                <td><?= htmlspecialchars($team['capstone_title']) ?></td>
+                                <td><?= htmlspecialchars($team['capstone_type']) ?></td>
+                                <td><?= htmlspecialchars($team['adviser_name']) ?></td>
+                                <td>
+                                    <?php 
+                                    $members = explode(', ', $team['members']);
+                                    foreach ($members as $member) {
+                                        if (strpos($member, '(Leader)') !== false) {
+                                            echo '<span class="leader">' . htmlspecialchars($member) . '</span>,<br>';
+                                        } else {
+                                            echo htmlspecialchars($member) . '<br>';
+                                        }
+                                    }
+                                    ?>
+                                </td>
+                                <?php if ($is_adviser): ?>
+                                    <td>
+                                        <a href="edit_team.php?id=<?= htmlspecialchars($team['team_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="#" 
+                                            class="btn btn-sm btn-info open-modal-btn" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#teamModal"
+                                            data-team-id="<?= htmlspecialchars($team['team_id']) ?>">
+                                            View
+                                        </a>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+            
+            <?php if ($is_adviser): ?>
+                <div class="mt-4">
+                    <a href="imacs-add_teams" class="btn btn-success">Create New Team</a>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
-
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/view_team.js"></script>
+
 </body>
 </html>

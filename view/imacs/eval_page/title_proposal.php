@@ -4,8 +4,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserController.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/viewFileController.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamgroup.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 
 ?>
 
@@ -293,6 +293,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
 <script src="/js/insert_feedback.js"></script>
 <script src="/js/view_feedback.js"></script>
 <script src="/js/modal.js"></script>
+<script src="/js/view_team.js"></script>
 <script src="/js/accordion.js"></script>
         
 </body>

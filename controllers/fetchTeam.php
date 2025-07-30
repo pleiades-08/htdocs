@@ -1,9 +1,7 @@
 <?php 
 
-header('Content-Type: application/json'); 
-require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 
-$team_id = $_GET['team_id'];    
+$team_id = $_GET['td'];    
 
     try{        
         $query = "
@@ -46,18 +44,10 @@ $team_id = $_GET['team_id'];
     if (!empty($results)) {
         $teamData = $results[0];
         $user_is_on_team = true;
-        echo json_encode([
-        'success' => true,
-        'data' => $teamData
-    ]);
 
     } else {
         $error = "Detailed team data not found for your assigned team. Please contact support.";
         $user_is_on_team = false; 
-        echo json_encode([
-        'success' => false,
-        'error' => $error ?? 'Unknown error.'
-    ]);
     }
 
     } catch (PDOException $e) {

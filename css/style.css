@@ -49,7 +49,7 @@ li a:hover:not(.active) {
   justify-content: center;
 }
 .content-page{
-  width: 84.3vw;
+  width: 85vw;
   height: auto;
   align-items: center;
   margin-left: 15%;
@@ -238,6 +238,7 @@ form#teamForm {
 
 #data_table th{
   width:fit-content;
+  max-width: 95%;
   text-wrap:nowrap;
 }
 

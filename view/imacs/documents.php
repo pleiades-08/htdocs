@@ -47,9 +47,8 @@ try{
     <br>
 
     <div class="content-page">
-    <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
         <h1 style="margin: 100px 50px 50px 50px;">Document Revision Tracking</h1>
-        <div class="container">
             <div class="search">
                 <form method="GET" action="../../router/router.php">
                     <input type="hidden" name="page" value="imacs-documents">
@@ -59,14 +58,14 @@ try{
             </div>
             <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
                 <tr>
-                    <th style="padding: 6px;" scope="col">Uploaded by</th>
-                    <th style="padding: 6px;" scope="col">Team ID</th>
-                    <th style="padding: 6px;" scope="col">Title</th>
-                    <th style="padding: 6px;" scope="col">Date Uploaded</th>
-                    <th style="padding: 6px;" scope="col">Capstone Progress</th>
-                    <th style="padding: 6px;" scope="col">Version No.</th>
-                    <th style="padding: 6px;" scope="col">Status</th>
-                    <th style="padding: 6px;" scope="col">Action</th>
+                    <th scope="col">Uploaded by</th>
+                    <th scope="col">Team ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date Uploaded</th>
+                    <th scope="col">Capstone Progress</th>
+                    <th scope="col">Version No.</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
                 </tr>
                     <?php if ($documents): ?>
                         <?php foreach ($documents as $row): ?>
@@ -94,7 +93,7 @@ try{
             <?php
             exit();
             ?>
-        </div>
+    </div>
             <script src="../../js/components.js"></script>
 </body>
 </html>
