@@ -9,7 +9,7 @@ $page = $_GET['page'] ?? 'imacs-home';
 $routes = [
 
     //admin router
-
+    
 
     //Faculty router
     'imacs-home' => '../view/imacs/imacs-home.php',

@@ -5,5 +5,17 @@ if ($fetch['user_type'] !== 'student') {
     header("Location: unauthorized.php");
     exit();
 }
+if ($fetch['user_type'] !== 'student') {
+    header("Location: unauthorized.php");
+    exit();
+}
+if ($fetch['user_type'] !== 'student') {
+    header("Location: unauthorized.php");
+    exit();
+}
+if ($fetch['user_type'] !== 'student') {
+    header("Location: unauthorized.php");
+    exit();
+}
 
 ?>
