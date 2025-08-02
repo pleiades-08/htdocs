@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 
 
 $adviser = $_POST['adviser'];

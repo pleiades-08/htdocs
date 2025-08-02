@@ -2,10 +2,11 @@
 // components-router.php
 class ComponentRouter {
   private $components = [
-    'header' => '../assets/components/header.php',
-    'sidebar' => '../assets/components/sidebar.php',
-    'navbar' => '../assets/components/navbar.php',
-    'fnavbar' => '../assets/components/fnavbar.php',
+    'header' => '../assets/components/header.php', //header component
+    'sidebar' => '../assets/components/sidebar.php', //sidebar component
+    'navbar' => '../assets/components/navbar.php', //navbar component for student
+    'fnavbar' => '../assets/components/fnavbar.php', //navbar component for faculty
+    'anavbar' => '../assets/components/anavbar.php', //navbar component for admin
   ];
 
   public function load($componentName) {

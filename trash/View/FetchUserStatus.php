@@ -4,8 +4,8 @@ include '../dbconnect.php';
 
 try {
     $activesql = "SELECT user_id, CONCAT(fname, ' ', mname, ' ', lname) AS fullname, role, dept, status_ 
-                  FROM tbl_accounts 
-                  WHERE status_ = 'Active'";
+                    FROM tbl_accounts 
+                    WHERE status_ = 'Active'";
     $active_stmt = $conn->query($activesql);
     $active_accounts = $active_stmt->fetchAll(PDO::FETCH_ASSOC);
 

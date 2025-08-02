@@ -1,11 +1,12 @@
 <?php
 include('dbconnect.php');
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
+    // Get the user ID from the URL
+    $user_id = (int) $_GET['user_id'];
 
     try {
-        $sql = "UPDATE tbl_accounts SET status_ = 'Active' WHERE id = :id";
+        $sql = "UPDATE users SET status_ = 'Active' WHERE user_id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 

@@ -49,9 +49,9 @@ li a:hover:not(.active) {
   justify-content: center;
 }
 .content-page{
-  width: 85vw;
+  width: auto;
   height: auto;
-  align-items: center;
+  align-items: flex-start;
   margin-left: 15%;
   display: flex;
   flex-direction: column;
@@ -62,6 +62,7 @@ li a:hover:not(.active) {
   width: auto;
   height: 10vh;
   align-items: center;
+  margin-left: 30px;
 }
   .search-bar {
   padding: 8px;
@@ -70,7 +71,13 @@ li a:hover:not(.active) {
   width: 20vw;
   border: 1px solid #ccc;
 }
+.search .btn {
+  width:100px;
+  border-radius:5px!important;
+  background:#74c476;
+  border:none;
 
+}
 
 .container-t {
   max-width: 60vw;
@@ -236,47 +243,35 @@ form#teamForm {
 
 /* Document style */
 
-#data_table th{
-  width:fit-content;
-  max-width: 95%;
-  text-wrap:nowrap;
-}
 
-#data_table th{
+.data_table th{
   background:#74c476;
   border:none;
   color:white;
-}
-
-#data_table td {
-  padding:20px;
-}
-
-#data_table table {
-  border-radius:10px!important;
 }
 
 .col-md-10 {
   width:100%;
 }
 
-#data_table .btn {
-  padding:10px 0!important;
-  width:70px;
-  margin-bottom:8px;
-  border-radius:5px!important;
-  color:white!important;
+
+
+
+
+.add-acc {
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
 }
 
-#data_table .btn-primary {
-  background:#3498dbd1;
-  border:none;
-}
-
-.search .btn {
-  width:100px;
-  border-radius:5px!important;
-  background:#74c476;
-  border:none;
-
+.info {
+    display: grid;
+    height: 200px;
+    width: 50%;
+    border: #74c476 solid;
+    align-items: center;
+    justify-content: center;
 }

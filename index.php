@@ -214,31 +214,36 @@ declare(strict_types=1);
 <body>
 
     <div class="modal_overlay" id="modalOverlay">
-    <div class="modal_content">
-        <span class="close_modal" onclick="toggleModal()">x</span>
-        <form action="actions/login-query.php" class="login-form" method="POST">  
-        <div class="form-heading">Login</div>
+        <div class="modal_content">
+            <span class="close_modal" onclick="toggleModal()">x</span>
+            <form action="actions/login-query.php" class="login-form" method="POST">  
+            <div class="form-heading">Login</div>
 
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
 
-        <div class="input-group">
-            <label class="label" for="username">username</label>
-            <input required="" placeholder="username" name="username" id="username" type="username" />
+            <div class="input-group">
+                <label class="label" for="username">username</label>
+                <input required="" placeholder="username" name="username" id="username" type="username" />
+            </div>
+            <div class="input-group">
+                <label class="label" for="password">password</label>
+                <input required="" placeholder="Enter your password" name="password" id="password" type="password" />
+            </div>
+            <button class="submit" name="login" type="submit">Log In</button>
+            </form>
         </div>
-        <div class="input-group">
-            <label class="label" for="password">password</label>
-            <input required="" placeholder="Enter your password" name="password" id="password" type="password" />
-        </div>
-        <button class="submit" name="login" type="submit">Log In</button>
-        </form>
-    </div>
     </div>
 <button onclick="toggleModal()" style="position: fixed; top: 20px; right: 20px; padding: 10px; background: #58bc82; color: white; border: none; border-radius: 8px; cursor: pointer;">
     Login
 </button>
-
+        <div class="container-search">
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." />
+                <button type="submit">Search</button>
+            </div>
+        </div>
 <script>
     function toggleModal() {
         const overlay = document.getElementById("modalOverlay");

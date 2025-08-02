@@ -25,14 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     $_SESSION['user'] = $fetch['user_id'];
 
                     $user_type = strtolower($fetch['user_type']);
-                    if ($user_type === 'student') {
-                        header("Location: /student-home");
+                    // Redirect based on user type
+                    if ($user_type === 'admin') {
+                        header("Location: /admin-home");
                         exit();
                     } elseif ($user_type === 'faculty') {
                         header("Location: /imacs-home");
                         exit();
-
-                    } else {
+                    } elseif ($user_type === 'student') {
+                        header("Location: /student-home");
+                        exit();
+                    }
+                    else {
                         echo "<script>alert('User type not recognized'); window.location='../index.php';</script>";
                         exit();
                     }

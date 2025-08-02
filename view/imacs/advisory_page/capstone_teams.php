@@ -162,11 +162,13 @@ if ($teamd !== null) {
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <div class="container">
             <h2 class="mb-4"><?= $is_adviser ? 'Your Advised Teams' : 'Your Capstone Team' ?></h2>
             <?php if (isset($_SESSION['success'])): ?>

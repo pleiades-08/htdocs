@@ -29,8 +29,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
     <center><h2 style="margin: 10px 0px 10px 0px">Capstone Document Evaluation</h2></center>
     <hr>
     <div class="pdf-section">
+        <!-- Bootstrap Placeholder for PDF -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
-                
         <script>
             const url = '<?= htmlspecialchars($file_path) ?>';
 
@@ -129,40 +129,53 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
             <div class="evalcon evalcon2" style="margin: 30px 0 30px 0;">
                 <h4>Previous Evaluation</h4>
                 <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
-                <p class="text-sm text-gray-500 mt-4"><strong>Document: </strong><span id="fileNameDisplay"><?= htmlspecialchars($fileName ?? 'N/A') ?></span></p>
-                <select id="history" name="history_chapter" onchange="showEval(this.value)">
-                    <option value="">-- Select Evaluation Type --</option>
-                    <option value="Proposal">Title Proposal</option>
-                    <option value="Capstone 1">Capstone 1</option>
-                    <option value="Capstone 2">Capstone 2</option>
-                </select>
 
-                <table id="results">
-                    <tr>
-                        <th>Comments:</th>
-                        <td id="commentsTd" class="loading">Select an evaluation type to view details.</td>
-                    </tr>
-                </table>
+                <!-- Placeholder while loading comment history -->
+                <div id="comment-history-placeholder" class="placeholder-glow mb-3">
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                </div>
 
-                <table>
-                    <tr>
-                        <th>Suggestions:</th>
-                        <td id="suggestionsTd" class="loading">Select an evaluation type to view details.</td>
-                    </tr>
-                </table>
+                <div id="actual-comment-history" style="display: none;">
+                    <p class="text-sm text-gray-500 mt-4"><strong>Document: </strong><span id="fileNameDisplay"><?= htmlspecialchars($fileName ?? 'N/A') ?></span></p>
+                    <select id="history" name="history_chapter" onchange="showEval(this.value)">
+                        <option value="">-- Select Evaluation Type --</option>
+                        <option value="Proposal">Title Proposal</option>
+                        <option value="Capstone 1">Capstone 1</option>
+                        <option value="Capstone 2">Capstone 2</option>
+                    </select>
 
-                <table>
-                    <tr>
-                        <th>Revisions:</th>
-                        <td id="revisionsTd" class="loading">Select an evaluation type to view details.</td>
-                    </tr>
-                </table>
+                    <table id="results">
+                        <tr>
+                            <th>Comments:</th>
+                            <td id="commentsTd" class="loading">Select an evaluation type to view details.</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>Suggestions:</th>
+                            <td id="suggestionsTd" class="loading">Select an evaluation type to view details.</td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>Revisions:</th>
+                            <td id="revisionsTd" class="loading">Select an evaluation type to view details.</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
             <div class="evalcon evalcon2" style="margin: 30px 0 30px 0;">
             <h4>Team information:</h4>
                 <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
                 <div class="container-t">
+                <div id="comment-history-placeholder" class="placeholder-glow mb-3">
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                    <p class="placeholder col-12 placeholder-lg"></p>
+                </div>
                     <?php if (isset($error)): ?>
                         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
@@ -295,6 +308,15 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 <script src="/js/modal.js"></script>
 <script src="/js/view_team.js"></script>
 <script src="/js/accordion.js"></script>
+<script>
+    // Simulate loading delay (adjust to actual AJAX call timing)
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('comment-history-placeholder').style.display = 'none';
+            document.getElementById('actual-comment-history').style.display = 'block';
+        }, 3000); // 1 second delay
+    });
+</script>
         
 </body>
 </html>
