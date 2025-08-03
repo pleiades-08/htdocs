@@ -215,7 +215,7 @@ declare(strict_types=1);
 
     <div class="modal_overlay" id="modalOverlay">
         <div class="modal_content">
-            <span class="close_modal" onclick="toggleModal()">x</span>
+            <span class="close_modal" onclick="toggleModal()">&times;</span>
             <form action="actions/login-query.php" class="login-form" method="POST">  
             <div class="form-heading">Login</div>
 
@@ -244,6 +244,7 @@ declare(strict_types=1);
                 <button type="submit">Search</button>
             </div>
         </div>
+        
 <script>
     function toggleModal() {
         const overlay = document.getElementById("modalOverlay");

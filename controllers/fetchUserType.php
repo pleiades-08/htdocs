@@ -1,21 +1,9 @@
 <?php 
 require_once __DIR__ . '/../actions/db.php';
-    
-if ($fetch['user_type'] !== 'student') {
-    header("Location: unauthorized.php");
-    exit();
-}
-if ($fetch['user_type'] !== 'student') {
-    header("Location: unauthorized.php");
-    exit();
-}
-if ($fetch['user_type'] !== 'student') {
-    header("Location: unauthorized.php");
-    exit();
-}
-if ($fetch['user_type'] !== 'student') {
-    header("Location: unauthorized.php");
-    exit();
-}
+
+$id = $_SESSION['user'];
+    $sql = $pdo->prepare("SELECT * FROM `users` WHERE `user_id`=?");
+    $sql->execute([$id]);
+    $fetch = $sql->fetch();
 
 ?>

@@ -4,14 +4,14 @@ require_once __DIR__ . '/../actions/db.php';
 
 header('Content-Type: application/json');
 try {
-    $activesql = "SELECT user_id, CONCAT(first_name, ' ', middle_name, ' ', last_name) AS fullname, user_type, dept, status_ 
+    $activesql = "SELECT user_id, CONCAT(first_name, ' ', middle_name, ' ', last_name) AS fullname, school_id, user_type, dept, status_ 
                     FROM users 
                     WHERE status_ = 'active'";
     $active_stmt = $pdo->query($activesql);
     $active_accounts = $active_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-    $inactivesql = "SELECT user_id, CONCAT(first_name, ' ', middle_name, ' ', last_name) AS fullname, user_type, dept, status_ 
+    $inactivesql = "SELECT user_id, CONCAT(first_name, ' ', middle_name, ' ', last_name) AS fullname,school_id, user_type, dept, status_ 
                     FROM users 
                     WHERE status_ = 'inactive'";
 

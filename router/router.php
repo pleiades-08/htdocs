@@ -14,6 +14,13 @@ $routes = [
     'admin-documents' => '../view/admin/admin-documents.php',
     'admin-profile' => '../view/admin/admin-profile.php',
     'admin-manage' => '../view/admin/manage-account.php',
+    
+    //research coordinator router
+    'research-coor-home' => '../view/research-coor/research-coor-home.php',
+    'research-coor-dashboard' => '../view/research-coor/research-coor-dashboard.php',
+    'research-coor-documents' => '../view/research-coor/research-coor-documents.php',
+    'research-coor-profile' => '../view/research-coor/research-coor-profile.php',
+    'research-coor-manage_roles' => '../view/research-coor/manage_roles.php',
 
     //Faculty router
     'imacs-home' => '../view/imacs/imacs-home.php',
@@ -39,8 +46,9 @@ $routes = [
     'student-capstone_1' => '../view/student/eval_page/capstone_1.php', 
     'student-capstone_2' => '../view/student/eval_page/capstone_2.php', 
     'student-capstone_teams' => '../view/student/teams/capstone_teams.php', 
-    
-      
+    'student-request_schedule' => '../view/student/teams/request_schedule.php', 
+
+
     'logout' => $_SERVER['DOCUMENT_ROOT'] . '/actions/logout.php',
 
     'error404' => $_SERVER['DOCUMENT_ROOT'] . '/error404.php'

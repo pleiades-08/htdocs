@@ -6,7 +6,7 @@ ob_clean();
 
 $chapter_no = $_POST['selectedValue'] ?? '';
 $documentId = $_POST['documentId'] ?? '';
-$reviewerId = $_POST['reviewerId'] ?? '';
+$reviewerId = $_POST['reviewerId'] ?? ''; 
 
 if (!$chapter_no || !$documentId || !$reviewerId) {
     echo json_encode(['error' => 'Missing parameters']);

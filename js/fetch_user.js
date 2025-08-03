@@ -10,7 +10,12 @@ $(document).ready(function() {
             data.active.forEach(function(user) {
             $('#activeTable tbody').append(`
                 <tr>
-                <td>${user.user_id}</td>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input userCheckbox" value="${user.user_id}">
+                    </div>
+                </td>
+                <td>${user.school_id}</td>
                 <td>${user.fullname}</td>
                 <td>${user.user_type}</td>
                 <td>${user.dept}</td>
@@ -43,7 +48,12 @@ $(document).ready(function() {
             data.inactive.forEach(function(user) {
             $('#inactiveTable tbody').append(`
                 <tr>
-                <td>${user.user_id}</td>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input userCheckbox1" value="${user.user_id}">
+                    </div>
+                </td>
+                <td>${user.school_id}</td>
                 <td>${user.fullname}</td>
                 <td>${user.user_type}</td>
                 <td>${user.dept}</td>
@@ -85,9 +95,10 @@ function renderTable(data, target) {
     tbody.empty();
 
     const isActiveTable = target === '#activeTable';
+    const checkboxClass = isActiveTable ? 'userCheckbox' : 'userCheckbox1';
 
     if (data.length === 0) {
-        tbody.append(`<tr><td colspan="6" class="text-center text-muted">No records found.</td></tr>`);
+        tbody.append(`<tr><td colspan="7" class="text-center text-muted">No records found.</td></tr>`);
         return;
     }
 
@@ -123,7 +134,12 @@ function renderTable(data, target) {
 
         tbody.append(`
             <tr>
-                <td>${user.user_id}</td>
+                <td>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input ${checkboxClass}" value="${user.user_id}">
+                    </div>
+                </td>
+                <td>${user.school_id}</td>
                 <td>${user.fullname}</td>
                 <td>${user.user_type}</td>
                 <td>${user.dept}</td>
@@ -200,3 +216,5 @@ function sortTable(data, column, order) {
     });
 
 });
+
+

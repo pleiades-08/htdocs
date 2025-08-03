@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 // Fetch current adviser using your existing method
 $id = $_SESSION['user'];
@@ -103,11 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/component.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/component.css">
     <title>IMACS FACULTY | WORKSPACE</title>
 </head>
 
@@ -125,74 +125,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #0d6efd;
         }
     </style>
+
 <body>
     
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/navbar.php'; ?>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/fsidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-
-    <div class="content-page"> 
+    <main>
+        <div class="content-page"> 
             <div class="col-md-10">
                 <div class="container mt-5">
-        <h1 class="mb-4">Create New Capstone Team</h1>
-        
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-        
-        <form method="POST" id="teamForm">
-            <div class="mb-3">
-                <label for="team_name" class="form-label">Team Name</label>
-                <input type="text" class="form-control" id="team_name" name="team_name" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="capstone_title" class="form-label">Capstone Title</label>
-                <input type="text" class="form-control" id="capstone_title" name="capstone_title" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="capstone_type" class="form-label">Capstone Type</label>
-                <select class="form-select" id="capstone_type" name="capstone_type" required>
-                    <option value="Title Proposal">Title Proposal</option>
-                    <option value="Capstone 1">Capstone 1</option>
-                    <option value="Capstone 2">Capstone 2</option>
-                </select>
-            </div>
-            
-            <input type="hidden" name="adviser" value="<?= htmlspecialchars($adviser_name) ?>">
-            
-            <h4 class="mt-4">Team Members</h4>
-            <p>Select at least 2 members. The first member will be the team leader.</p>
-            
-            <?php for ($i = 1; $i <= 5; $i++): ?>
-                <div class="member-select">
-                    <label for="member<?= $i ?>" class="form-label">
-                        Member <?= $i ?><?= $i === 1 ? ' (Leader)' : ($i <= 2 ? ' (Required)' : ' (Optional)') ?>
-                    </label>
-                    <select class="form-select member-select" id="member<?= $i ?>" name="member<?= $i ?>" <?= $i <= 2 ? 'required' : '' ?>>
-                        <option value="">-- Select Student --</option>
-                        <?php foreach ($students as $student): ?>
-                            <option value="<?= htmlspecialchars($student['user_id']) ?>">
-                                <?= htmlspecialchars($student['full_name']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            <?php endfor; ?>
-            
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Create Team</button>
-                <a href="/imacs-capstone_teams" class="btn btn-secondary">Cancel</a>
-            </div>
-                </form>
-    
+                <h1 class="mb-4">Create New Capstone Team</h1>
+                
+                <?php if (isset($error)): ?>
+                    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                <?php endif; ?>
+                
+                <form method="POST" id="teamForm">
+                    <div class="mb-3">
+                        <label for="team_name" class="form-label">Team Name</label>
+                        <input type="text" class="form-control" id="team_name" name="team_name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="capstone_title" class="form-label">Capstone Title</label>
+                        <input type="text" class="form-control" id="capstone_title" name="capstone_title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="capstone_type" class="form-label">Capstone Type</label>
+                        <select class="form-select" id="capstone_type" name="capstone_type" required>
+                            <option value="Title Proposal">Title Proposal</option>
+                            <option value="Capstone 1">Capstone 1</option>
+                            <option value="Capstone 2">Capstone 2</option>
+                        </select>
+                    </div>
+                    
+                    <input type="hidden" name="adviser" value="<?= htmlspecialchars($adviser_name) ?>">
+                    
+                    <h4 class="mt-4">Team Members</h4>
+                    <p>Select at least 2 members. The first member will be the team leader.</p>
+                    
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <div class="member-select">
+                            <label for="member<?= $i ?>" class="form-label">
+                                Member <?= $i ?><?= $i === 1 ? ' (Leader)' : ($i <= 2 ? ' (Required)' : ' (Optional)') ?>
+                            </label>
+                            <select class="form-select member-select" id="member<?= $i ?>" name="member<?= $i ?>" <?= $i <= 2 ? 'required' : '' ?>>
+                                <option value="">-- Select Student --</option>
+                                <?php foreach ($students as $student): ?>
+                                    <option value="<?= htmlspecialchars($student['user_id']) ?>">
+                                        <?= htmlspecialchars($student['full_name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endfor; ?>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Create Team</button>
+                        <a href="/imacs-capstone_teams" class="btn btn-secondary">Cancel</a>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

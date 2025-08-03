@@ -1,11 +1,7 @@
-
-<?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
-
-    $team_id = (int)$_GET['team_id'];
-
-    $stmt = $pdo->prepare("
-    SELECT t.*,
+<?php    
+    try{        
+        $query = "
+        SELECT t.*,
             COALESCE(CONCAT(adv.first_name,' ', adv.last_name), 'No Adviser') AS adviser_name,
             COALESCE(CONCAT(tech.first_name,' ', tech.last_name), 'No Technical') AS technical_name,
             COALESCE(CONCAT(chair.first_name,' ', chair.last_name), 'No Chairperson') AS chairman_name,
@@ -31,42 +27,24 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
             `team_members` tm ON t.team_id = tm.team_id
         LEFT JOIN
             `users` m ON tm.user_id = m.user_id
-        WHERE
-            t.team_id = ?
         GROUP BY
             t.team_id
-    ");
-    $stmt->execute([$team_id]);
-    $team = $stmt->fetch(PDO::FETCH_ASSOC);
+    ";
+    $stmt_team_data = $pdo->prepare([$query]);
+    $results = $stmt_team_data->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($team) {
-        // Optionally decode or format members if stored as string
-        $team['members'] = explode(', ', $team['members']);
-        echo json_encode(['success' => true, 'data' => $team]);
+    
+    if (!empty($results)) {
+        $teamData = $results[0];
+        $user_is_on_team = true;
+
     } else {
-        echo json_encode(['success' => false, 'message' => 'Team not found']);
+        $error = "Detailed team data not found for your assigned team. Please contact support.";
+        $user_is_on_team = false; 
     }
-    exit;
-?>
 
-<?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['team_id'])) {
-    $team_id = (int)$_GET['td'];
-
-    $stmt = $pdo->prepare("SELECT * FROM teams WHERE team_id = ?");
-
-    $stmt->execute([$team_id]);
-    $team = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($team) {
-        // Optionally decode or format members if stored as string
-        $team['members'] = explode(', ', $team['members']);
-        echo json_encode(['success' => true, 'data' => $team]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Team not found']);
+    } catch (PDOException $e) {
+    $error = "Database error: " . $e->getMessage();
+    $user_is_on_team = false; 
     }
-    exit;
-}
 ?>

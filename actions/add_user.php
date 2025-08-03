@@ -13,7 +13,7 @@ if (isset($_POST["submit"])) {
     $dept      = $_POST['dept'];
 
     try {
-        $conn->beginTransaction();
+        $pdo->beginTransaction();
 
         $sql = "INSERT INTO users 
             (school_id, 
@@ -45,7 +45,8 @@ if (isset($_POST["submit"])) {
 
         $pdo->commit();
 
-        echo '<script>
+        echo '
+        <script>
             alert("Data added successfully");
             window.location.href = "/admin-manage";
         </script>';

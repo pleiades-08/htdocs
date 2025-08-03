@@ -12,23 +12,22 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/view-pdf.css">
-    <link rel="stylesheet" href="../../css/component.css">
+    <link rel="stylesheet" href="/css/view-pdf.css">
+    <link rel="stylesheet" href="/css/component.css">
     <title>IMACS | Title Proposal</title>
 </head>
 <body>
     
-<?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/navbar.php'; ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
 
-
-<div class="content-page">
-    <div class="col-md-3"></div>
-    <center><h2 style="margin: 10px 0px 10px 0px">Capstone Document Evaluation</h2></center>
-    <hr>
-    <div class="pdf-section">
+<main>
+    <div class="content-page">
+        <div class="col-md-3"></div>
+        <center><h2 style="margin: 10px 0px 10px 0px">Capstone Document Evaluation</h2></center>
+        <hr>
+        <div class="pdf-section">
         <!-- Bootstrap Placeholder for PDF -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
         <script>
@@ -46,7 +45,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 
                 for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
                     pdf.getPage(pageNumber).then(function(page) {
-                        const scale = 1.2;
+                        const scale = 1.5;
                         const viewport = page.getViewport({ scale: scale });
 
                         const canvas = document.createElement('canvas');

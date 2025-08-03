@@ -26,10 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
                     $user_type = strtolower($fetch['user_type']);
                     // Redirect based on user type
-                    if ($user_type === 'admin') {
-                        header("Location: /admin-home");
-                        exit();
-                    } elseif ($user_type === 'faculty') {
+                    if ($user_type === 'faculty' || $user_type === 'admin') {
                         header("Location: /imacs-home");
                         exit();
                     } elseif ($user_type === 'student') {

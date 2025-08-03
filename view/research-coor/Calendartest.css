@@ -1,0 +1,43 @@
+
+    .calendar {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 340px;
+    }
+
+    .calendar header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    select {
+      padding: 5px;
+      font-size: 1rem;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .day {
+      text-align: center;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .weekday {
+      font-weight: bold;
+      background: #eee;
+    }
+
+    .today {
+      background: #3498db;
+      color: white;
+      font-weight: bold;
+    }
