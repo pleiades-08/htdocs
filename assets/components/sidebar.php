@@ -1,16 +1,18 @@
 <?php
 
 
+
 $userType = $fetch['user_type'] ?? null;
 
 $_SESSION['user_role'] = $userType;
 
 // Set role flags
 $_SESSION['is_admin'] = ($userType === 'admin');
-$_SESSION['is_coordinator'] = ($userType === 'research_coordinator');
-$_SESSION['is_faculty'] = in_array($userType, ['faculty', 'admin', 'research_coordinator']);
+$_SESSION['is_coordinator'] = ($userType === 'coordinator');
+$_SESSION['is_faculty'] = in_array($userType, ['faculty', 'admin', 'coordinator']);
 $_SESSION['is_student'] = ($userType === 'student');
 
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
 ?>
 
 <div class="sidebar">
@@ -45,7 +47,7 @@ $_SESSION['is_student'] = ($userType === 'student');
 
         <?php if ($_SESSION['is_coordinator']): ?>
 
-            <a href="/research-coor-manage_roles"></a>
+            <a href="/research-coor-manage_roles">Manage Roles</a>
 
         <?php endif; ?>
 
@@ -55,15 +57,21 @@ $_SESSION['is_student'] = ($userType === 'student');
 
         <a href="/student-home">Home</a>
         <a href="/student-dashboard">Dashboard</a>
-        <a href="/student-documents">Documents</a>
-        <div class="dropdown">
-            <button class="dropbtn">Teams <span style="margin-left: 10px;" class="arrow"><strong>></strong> </span></button>
-            <div class="dropdown-content">
-                <a style="margin:10px 0 0 10px;" href="/student-capstone_teams">Capstone Team</a>
-                <a style="margin:10px 0 0 10px;" href="/student-upload">Upload</a>
-                <a style="margin:10px 0 0 10px;" href="/student-request_schedule">Schdule</a>
+
+        <?php if ($isInTeam): ?>
+            <!-- Show something for users in a team -->
+            <div class="dropdown">
+                <button class="dropbtn">Teams <span style="margin-left: 10px;" class="arrow"><strong>></strong> </span></button>
+                <div class="dropdown-content">
+                    <a style="margin:10px 0 0 10px;" href="/student-capstone_teams">Capstone Team</a>
+                    <a style="margin:10px 0 0 10px;" href="/student-upload">Upload</a>
+                    <a style="margin:10px 0 0 10px;" href="/student-request_schedule">Schdule</a>
+                </div>
             </div>
-        </div>
+        <?php else: ?>
+            <a href="/student-no_team">Teams</a>
+        <?php endif; ?>
+
         <a href="/student-profile">Profile</a>
     
     <?php endif; ?>

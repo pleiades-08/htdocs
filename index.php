@@ -222,7 +222,8 @@ declare(strict_types=1);
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
             <?php endif; ?>
-
+            
+            
             <div class="input-group">
                 <label class="label" for="username">username</label>
                 <input required="" placeholder="username" name="username" id="username" type="username" />
@@ -239,10 +240,7 @@ declare(strict_types=1);
     Login
 </button>
         <div class="container-search">
-            <div class="search-bar">
-                <input type="text" placeholder="Search..." />
-                <button type="submit">Search</button>
-            </div>
+            
         </div>
         
 <script>

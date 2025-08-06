@@ -16,39 +16,39 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
     <title>Manage Accounts</title>
 <style>
     .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            overflow:scroll;
-        }
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 20px;
-            width: 50%;
-            border-radius: 8px;
-            position: relative;
-        }
-        .close {
-            position: absolute;
-            right: 20px;
-            top: 10px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .form-section {
-            display: none;
-        }
-        .form-section.active {
-            display: block;
-        }
-        th[data-column] {
-            cursor: pointer;
-            user-select: none;
-        }
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        overflow:scroll;
+    }
+    .modal-content {
+        background: white;
+        margin: 5% auto;
+        padding: 20px;
+        width: 50%;
+        border-radius: 8px;
+        position: relative;
+    }
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .form-section {
+        display: none;
+    }
+    .form-section.active {
+        display: block;
+    }
+    th[data-column] {
+        cursor: pointer;
+        user-select: none;
+    }
 </style>
 
 

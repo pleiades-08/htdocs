@@ -46,7 +46,6 @@ try{
 
     <main>
         <div class="content-page">
-            <div class="col-md-3"></div>
             <h1 style="margin: 100px 50px 50px 50px;">Document Revision Tracking</h1>
                 <div class="search">
                     <form method="GET" action="../../router/router.php">

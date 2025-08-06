@@ -34,12 +34,14 @@ $routes = [
     'imacs-workspace' => '../view/imacs/advisory_page/workspace.php',
     'imacs-capstone_teams' => '../view/imacs/advisory_page/capstone_teams.php',
     'imacs-capstone_titles' => '../view/imacs/advisory_page/capstone_titles.php',
+    'imacs-capstone_eval' => '../view/imacs/advisory_page/capstone_eval.php',
     'imacs-add_teams' => '../view/imacs/advisory_page/add_teams.php',
 
     //student router
     'student-home' => '../view/student/student-home.php',
     'student-dashboard' => '../view/student/dashboard.php',
     'student-documents' => '../view/student/documents.php',
+    'student-no_team' => '../view/student/no_team.php',
     'student-profile' => '../view/student/profile.php',
     'student-upload' => '../view/student/teams/upload.php',
     'student-title_proposal' => '../view/student/eval_page/title_proposal.php', 

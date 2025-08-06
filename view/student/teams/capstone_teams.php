@@ -1,87 +1,9 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
 
-$teamData = []; // Will hold detailed team information
-$documents = []; // Will hold documents for the team
-$error = null;   // For general errors
-$user_is_on_team = false; // Flag to check if the user belongs to a team
 
-try {
-    $user_id = $_SESSION['user']; // Assuming $_SESSION['user'] holds the user ID
-
-    // 1. Check if the user is part of any team
-    $stmt_team_member = $pdo->prepare("SELECT team_id FROM `team_members` WHERE `user_id` = ?");
-    $stmt_team_member->execute([$user_id]);
-    $userTeam = $stmt_team_member->fetch(PDO::FETCH_ASSOC);
-
-    if ($userTeam) {
-        $user_is_on_team = true;
-        $teamid = $userTeam['team_id'];
-
-        // 2. If user is on a team, fetch detailed team data
-        $query = "
-            SELECT t.*,
-                COALESCE(CONCAT(adv.first_name,' ', adv.last_name), 'No Adviser') AS adviser_name,
-                COALESCE(CONCAT(tech.first_name,' ', tech.last_name), 'No Technical') AS technical_name,
-                COALESCE(CONCAT(chair.first_name,' ', chair.last_name), 'No Chairperson') AS chairman_name,
-                COALESCE(CONCAT(major.first_name,' ', major.last_name), 'No Major') AS major_name,
-                COALESCE(CONCAT(minor.first_name,' ', minor.last_name), 'No Minor') AS minor_name,
-                COALESCE(CONCAT(panel.first_name,' ', panel.last_name), 'No Panelist') AS panelist_name,
-                GROUP_CONCAT(DISTINCT CONCAT(m.first_name, ' ', m.last_name) SEPARATOR ', ') AS members
-            FROM
-                `teams` t
-            LEFT JOIN
-                `users` adv ON t.adviser_id = adv.user_id
-            LEFT JOIN
-                `users` tech ON t.technical_id = tech.user_id
-            LEFT JOIN
-                `users` chair ON t.chairperson_id = chair.user_id
-            LEFT JOIN
-                `users` major ON t.major_id = major.user_id
-            LEFT JOIN
-                `users` minor ON t.minor_id = minor.user_id
-            LEFT JOIN
-                `users` panel ON t.panelist_id = panel.user_id
-            LEFT JOIN
-                `team_members` tm ON t.team_id = tm.team_id
-            LEFT JOIN
-                `users` m ON tm.user_id = m.user_id
-            WHERE
-                t.team_id = ?
-            GROUP BY
-                t.team_id
-        ";
-        $stmt_team_data = $pdo->prepare($query);
-        $stmt_team_data->execute([$teamid]);
-        $results = $stmt_team_data->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!empty($results)) {
-            $teamData = $results[0];
-
-            // 3. If team data is found, fetch documents for this team
-            $stmt_docs = $pdo->prepare("SELECT * FROM documents WHERE uploader_id = ? AND team_id = ?");
-            $stmt_docs->execute([$user_id, $teamData['team_id']]);
-            $documents = $stmt_docs->fetchAll(PDO::FETCH_ASSOC);
-
-            // The previous checks for $documents === false are less necessary here
-            // if PDO is configured to throw exceptions, but keeping empty() check is good.
-            // if ($documents === false) { /* handle error if fetchAll returns false */ }
-        } else {
-            // This case means user is in team_members but no full team data found, which is an inconsistency
-            $error = "Detailed team data not found for your assigned team. Please contact support.";
-            $user_is_on_team = false; // Treat as if not on a team for display purposes
-        }
-    } else {
-        // User is not part of any team
-        $error = "You are not currently part of any team.";
-        // $teamData and $documents will remain empty as initialized
-    }
-
-} catch (PDOException $e) {
-    $error = "Database error: " . $e->getMessage();
-    $user_is_on_team = false; // Ensure UI reflects no team if a DB error occurs
-}
 
 ?>
 
@@ -104,90 +26,97 @@ try {
 
     <main>
         <div class="content-page">
-            <div class="container-t">
-                <div class="table-title">Team Details</div>
-
-                <?php if (isset($error)): ?>
-                    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-                <?php endif; ?>
-
-                <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
-                    <?php unset($_SESSION['success']); ?>
-                <?php endif; ?>
-
-                <?php if ($user_is_on_team): ?>
-                    <!-- Example Row 1 -->
-                    <div class="table-row">
-                        <div class="header-cell">Title:</div>
-                        <div class="data-cell">
-                            <?= htmlspecialchars($teamData['capstone_title']) ?>
+            <div class="student-team">
+                <div class="container-t">
+                    
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                        <?php endif; ?>
+                        
+                        <?php if (isset($_SESSION['success'])): ?>
+                            <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
+                            <?php unset($_SESSION['success']); ?>
+                            <?php endif; ?>
+                    
+                    <div class="teams">
+                        <?php if ($user_is_on_team): ?>
+                            <div class="table-title">Team Details</div>
+                                <!-- Example Row 1 -->
+                        <div class="table-row">
+                            <div class="header-cell">Title:</div>
+                            <div class="data-cell">
+                                <?= htmlspecialchars($teamData['capstone_title']) ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Example Row 2 -->
-                    <div class="table-row">
-                        <div class="header-cell">Adviser:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['adviser_name']) ?></div>
-                    </div>
+                        <!-- Example Row 2 -->
+                        <div class="table-row">
+                            <div class="header-cell">Adviser:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['adviser_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row 3 -->
-                    <div class="table-row">
-                        <div class="header-cell">Technical:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['technical_name']) ?></div>
-                    </div>
+                        <!-- Example Row 3 -->
+                        <div class="table-row">
+                            <div class="header-cell">Technical:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['technical_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row 4 -->
-                    <div class="table-row">
-                        <div class="header-cell">Chairman:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['chairman_name']) ?></div>
-                    </div>
+                        <!-- Example Row 4 -->
+                        <div class="table-row">
+                            <div class="header-cell">Chairman:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['chairman_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row 5 -->
-                    <div class="table-row">
-                        <div class="header-cell">Major Discipline:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['major_name']) ?></div>
-                    </div>
+                        <!-- Example Row 5 -->
+                        <div class="table-row">
+                            <div class="header-cell">Major Discipline:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['major_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row 6 -->
-                    <div class="table-row">
-                        <div class="header-cell">Minor Discipline:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['minor_name']) ?></div>
-                    </div>
+                        <!-- Example Row 6 -->
+                        <div class="table-row">
+                            <div class="header-cell">Minor Discipline:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['minor_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row 7 -->
-                    <div class="table-row">
-                        <div class="header-cell">Panelist:</div>
-                        <div class="data-cell"><?= htmlspecialchars($teamData['panelist_name']) ?></div>
-                    </div>
+                        <!-- Example Row 7 -->
+                        <div class="table-row">
+                            <div class="header-cell">Panelist:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['panelist_name']) ?></div>
+                        </div>
 
-                    <!-- Example Row for Team Members (using a list inside data cell) -->
-                    <div class="table-row">
-                        <div class="header-cell">Team Members:</div>
-                        <div class="data-cell">
-                            <ul class="team-members-list">
-                            <?php 
-                            // Ensure 'members' key exists and is not null before exploding
-                            $members = !empty($teamData['members']) ? explode(', ', $teamData['members']) : [];
-                            if (!empty($members)) {
-                                foreach ($members as $member) {
-                                    echo '<li>' . htmlspecialchars(trim($member)) . '</li>';
+                        <!-- Example Row for Team Members (using a list inside data cell) -->
+                        <div class="table-row">
+                            <div class="header-cell">Team Members:</div>
+                            <div class="data-cell">
+                                <ul class="team-members-list">
+                                <?php 
+                                // Ensure 'members' key exists and is not null before exploding
+                                $members = !empty($teamData['members']) ? explode(', ', $teamData['members']) : [];
+                                if (!empty($members)) {
+                                    foreach ($members as $member) {
+                                        echo '<li>' . htmlspecialchars(trim($member)) . '</li>';
+                                    }
+                                } else {
+                                    echo '<li>No members found for this team.</li>';
                                 }
-                            } else {
-                                echo '<li>No members found for this team.</li>';
-                            }
-                            ?>
-                            </ul>
+                                ?>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Example Row 8 (if you need another single piece of data) -->
+                        <div class="table-row">
+                            <div class="header-cell">Project Status:</div>
+                            <div class="data-cell"><?= htmlspecialchars($teamData['capstone_type']) ?></div>
                         </div>
                     </div>
 
-                    <!-- Example Row 8 (if you need another single piece of data) -->
-                    <div class="table-row">
-                        <div class="header-cell">Project Status:</div>
-                        <div class="data-cell">In Progress</div>
-                    </div>
+                        
+                </div>
 
-                    <div class="table-title">Previously added Documents</div>
+                <div class="team-docs">
+                    <div class="table-title">Previously uploaded Documents</div>
                     <?php if (empty($documents)): ?>
                         <div class="alert alert-info">No documents uploaded yet.</div>
                     <?php else: ?>
@@ -217,11 +146,19 @@ try {
                                                 </small>
                                             </div>
                                         </div>
+                                        <button 
+                                            class="btn btn-sm btn-outline-primary view-pdf-btn" 
+                                            data-file="<?= htmlspecialchars($doc['file_path']) ?>"
+                                            data-bs-toggle="modal" data-bs-target="#pdfModal">
+                                            VIEW
+                                        </button>
+
                                     </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
+                </div>
 
                 <?php else: ?>
                     <!-- Message displayed if user is not on a team -->
@@ -229,10 +166,117 @@ try {
                         You are not currently assigned to any team. Please contact your administrator to be added to a team.
                     </div>
                 <?php endif; ?>
+                <!-- Modal -->
+                <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="pdfModalLabel">PDF Viewer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="ratio ratio-16x9">
+                                    <div class="pdf-section">
+                                        <!-- PDF Viewer Section -->
+                                        <div class="pdf-section mb-4">
+                                            <div id="loading-spinner" class="text-center my-3" style="display:none;">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                                <div>Loading PDF...</div>
+                                            </div>
+                                            <div id="pdf-viewer-container">
+                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+                                                <script>
+                                                    const pdfjsLib = window['pdfjs-dist/build/pdf'];
+                                                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+
+                                                    const container = document.createElement('div');
+                                                    container.id = 'pdf-container';
+                                                    document.body.querySelector('.pdf-section').prepend(container);
+
+                                                    function renderPDF(url) {
+                                                        // Clear previous renders
+                                                        container.innerHTML = '';
+
+                                                        pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                                                            for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                                                                pdf.getPage(pageNumber).then(function(page) {
+                                                                    const scale = 1.1;
+                                                                    const viewport = page.getViewport({ scale: scale });
+
+                                                                    const canvas = document.createElement('canvas');
+                                                                    const context = canvas.getContext('2d');
+                                                                    canvas.height = viewport.height;
+                                                                    canvas.width = viewport.width;
+
+                                                                    container.appendChild(canvas);
+
+                                                                    const renderContext = {
+                                                                        canvasContext: context,
+                                                                        viewport: viewport
+                                                                    };
+                                                                    page.render(renderContext);
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+
+                                                    // Automatically render the first document (if exists)
+                                                    <?php if (!empty($documents)): ?>
+                                                        renderPDF('<?= htmlspecialchars($documents[0]['file_path']) ?>');
+                                                    <?php endif; ?>
+
+                                                    // Event delegation for dynamically loaded buttons
+                                                    document.addEventListener('click', function(e) {
+                                                        if (e.target && e.target.classList.contains('view-pdf-btn')) {
+                                                            e.preventDefault();
+                                                            const filePath = e.target.getAttribute('data-file');
+                                                            renderPDF(filePath);
+                                                        }
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+
+                                        <!-- Comment Section -->
+                                        <div class="comment-section mt-4">
+                                            <div class="evalcon">
+                                                <center><h4 id="evalhead">Comments, Suggestions and Revisions</h4></center>
+                                                    <button class="accordion chapter" type="button">
+                                                        <h3>Rationale</h3> <span class="chevron">&#x25BC;</span>
+                                                    </button>
+                                                    <div class="panel chapter-content" >
+                                                        <button class="accordion nested" type="button"><h3>Comments</h3> <span class="chevron">&#x25BC;</span></button>
+                                                        <div class="nested-panel">
+                                                            <textarea name="comments" id="commentsInput" placeholder="Add comment for Rationale..."></textarea>
+                                                        </div>
+
+                                                        <button class="accordion nested" type="button"><h3>Suggestions</h3> <span class="chevron">&#x25BC;</span></button>
+                                                        <div class="nested-panel">
+                                                            <textarea name="suggestions" id="suggestionsInput" placeholder="Add suggestions for Rationale..."></textarea>
+                                                        </div>
+
+                                                        <button class="accordion nested" type="button"><h3>Revisions</h3> <span class="chevron">&#x25BC;</span></button>
+                                                        <div class="nested-panel">
+                                                            <textarea name="required_revisions" id="revisionsInput" placeholder="Add revisions for Rationale..."></textarea>
+                                                        </div>
+                                                    </div>
+                                                <input type="hidden" name="chapter_no" id="chapter_no" value="Proposal">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/accordion.js"></script>
 </body>
 </html>

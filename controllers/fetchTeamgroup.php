@@ -48,25 +48,3 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
     }
     exit;
 ?>
-
-<?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['team_id'])) {
-    $team_id = (int)$_GET['td'];
-
-    $stmt = $pdo->prepare("SELECT * FROM teams WHERE team_id = ?");
-
-    $stmt->execute([$team_id]);
-    $team = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($team) {
-        // Optionally decode or format members if stored as string
-        $team['members'] = explode(', ', $team['members']);
-        echo json_encode(['success' => true, 'data' => $team]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Team not found']);
-    }
-    exit;
-}
-?>

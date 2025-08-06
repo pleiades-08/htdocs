@@ -5,7 +5,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 $current_user_statement = $pdo->query("SELECT * FROM users WHERE user_id = " . (int)$id); // Example, assuming $id is globally available and safe
 $current_user = $current_user_statement->fetch(PDO::FETCH_ASSOC);
-$is_adviser = ($current_user['user_type'] === 'faculty');
+$is_adviser = ($current_user['user_type'] === 'faculty' ||
+            $current_user['user_type'] === 'admin' ||
+            $current_user['user_type'] === 'coordinator');
+
 
 
 $query = "
@@ -159,7 +162,14 @@ if ($teamd !== null) {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                        <a href="#"
+                            class="btn btn-sm btn-info open-modal-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#teamModal"
+                            data-team-id="<?= htmlspecialchars($team['team_id']) ?>"
+                            data-url="/imacs-capstone_eval?td=<?= urlencode($team['team_id']) ?>">
+                            View
+                        </a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -178,11 +188,9 @@ if ($teamd !== null) {
                         <?= $is_adviser ? 'You are not currently advising any teams.' : 'You are not currently assigned to any team.' ?>
                     </div>
                 <?php else: ?>
-                    <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
+                    <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
                         <thead class="table-dark">
                             <tr>
-                                <th>Team ID</th>
-                                <th>Team Name</th>
                                 <th>Capstone Title</th>
                                 <th>Type</th>
                                 <th>Adviser</th>
@@ -195,8 +203,6 @@ if ($teamd !== null) {
                         <tbody>
                             <?php foreach ($teams as $team): ?>
                                 <tr>
-                                    <td class="team-id"><?= htmlspecialchars($team['team_id']) ?></td>
-                                    <td class="team-title"><?= htmlspecialchars($team['team_name']) ?></td>
                                     <td><?= htmlspecialchars($team['capstone_title']) ?></td>
                                     <td><?= htmlspecialchars($team['capstone_type']) ?></td>
                                     <td><?= htmlspecialchars($team['adviser_name']) ?></td>
@@ -214,7 +220,6 @@ if ($teamd !== null) {
                                     </td>
                                     <?php if ($is_adviser): ?>
                                         <td>
-                                            <a href="edit_team.php?id=<?= htmlspecialchars($team['team_id']) ?>" class="btn btn-sm btn-primary">Edit</a>
                                             <a href="#" 
                                                 class="btn btn-sm btn-info open-modal-btn" 
                                                 data-bs-toggle="modal" 

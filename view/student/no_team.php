@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../actions/db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamsController.php'; // This is where $team is likely populated
@@ -18,14 +18,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
 </head>
 <body>
     
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
     <main>
         <div class="content-page">
             <div class="col-md-3"></div>
 
             <div class="container upload-container">
-                <h2 class="mb-4 mt-4">Upload Capstone Documents</h2>
+                <h2 class="mb-4 mt-4">Capstone Documents</h2>
                 
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>

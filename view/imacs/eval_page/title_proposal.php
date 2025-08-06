@@ -3,9 +3,9 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserController.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/viewFileController.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchVersions.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
 
 ?>
 
@@ -20,7 +20,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 </head>
 <body>
     
-<?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
 
 <main>
     <div class="content-page">
@@ -30,45 +29,60 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
         <div class="pdf-section">
         <!-- Bootstrap Placeholder for PDF -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
-        <script>
-            const url = '<?= htmlspecialchars($file_path) ?>';
+            <script>
+                const pdfjsLib = window['pdfjs-dist/build/pdf'];
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
 
-            const pdfjsLib = window['pdfjs-dist/build/pdf'];
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+                const container = document.createElement('div');
+                container.id = 'pdf-container';
+                document.body.querySelector('.pdf-section').prepend(container);
 
-            const container = document.createElement('div');
-            container.id = 'pdf-container';
-            document.body.querySelector('.pdf-section').prepend(container);
+                function renderPDF(url) {
+                    // Clear previous renders
+                    container.innerHTML = '';
 
-            pdfjsLib.getDocument(url).promise.then(function(pdf) {
-                const numPages = pdf.numPages;
+                    pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+                            pdf.getPage(pageNumber).then(function(page) {
+                                const scale = 1.3;
+                                const viewport = page.getViewport({ scale: scale });
 
-                for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
-                    pdf.getPage(pageNumber).then(function(page) {
-                        const scale = 1.5;
-                        const viewport = page.getViewport({ scale: scale });
+                                const canvas = document.createElement('canvas');
+                                const context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
 
-                        const canvas = document.createElement('canvas');
-                        const context = canvas.getContext('2d');
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
+                                container.appendChild(canvas);
 
-                        container.appendChild(canvas);
-
-                        const renderContext = {
-                            canvasContext: context,
-                            viewport: viewport
-                        };
-                        page.render(renderContext);
+                                const renderContext = {
+                                    canvasContext: context,
+                                    viewport: viewport
+                                };
+                                page.render(renderContext);
+                            });
+                        }
                     });
                 }
-            });
-        </script>
+
+                // Automatically render the first document (if exists)
+                <?php if (!empty($versions)): ?>
+                    renderPDF('<?= htmlspecialchars($versions[0]['file_path']) ?>');
+                <?php endif; ?>
+
+                // Event delegation for dynamically loaded buttons
+                document.addEventListener('click', function(e) {
+                    if (e.target && e.target.classList.contains('view-pdf-btn')) {
+                        e.preventDefault();
+                        const filePath = e.target.getAttribute('data-file');
+                        renderPDF(filePath);
+                    }
+                });
+            </script>
 
         <div class="comment-sections">
             <form method="POST" id="feedbackForm"> 
-                <div id="feedbackMessage"></div>
-                <div class="evalcon">
+            <div id="feedbackMessage"></div>
+            <div class="evalcon">
 
                 <center><h4 id="evalhead">Comments, Suggestions and Revisions</h4></center>
                     <button class="accordion chapter" type="button">
@@ -170,11 +184,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
             <h4>Team information:</h4>
                 <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
                 <div class="container-t">
-                <div id="comment-history-placeholder" class="placeholder-glow mb-3">
-                    <p class="placeholder col-12 placeholder-lg"></p>
-                    <p class="placeholder col-12 placeholder-lg"></p>
-                    <p class="placeholder col-12 placeholder-lg"></p>
-                </div>
                     <?php if (isset($error)): ?>
                         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                     <?php endif; ?>
@@ -255,6 +264,49 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
                             <div class="data-cell">In Progress</div>
                         </div>
 
+                        <div class="table-title">VERSIONS </div>
+
+                        <?php if (empty($versions)): ?>
+                            <div class="alert alert-info">No documents uploaded yet.</div>
+                        <?php else: ?>
+                            <div class="list-group">
+                                <?php foreach ($versions as $doc): ?>
+                                    <div class="list-group-item document-card mb-2">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <span class="file-icon">
+                                                    <?php if (strpos($doc['file_type'], 'pdf') !== false): ?>
+                                                        📄
+                                                    <?php elseif (strpos($doc['file_type'], 'word') !== false): ?>
+                                                        📝
+                                                    <?php else: ?>
+                                                        📁
+                                                    <?php endif; ?>
+                                                </span>
+                                                <div>
+                                                    <h6><?= htmlspecialchars($doc['document_name']) ?></h6>
+                                                    <small class="text-muted">
+                                                        Uploaded: <?= date('M d, Y h:i A', strtotime($doc['created_at'])) ?>
+                                                        | Size: <?= round($doc['file_size'] / 1024 / 1024, 2) ?>MB
+                                                        | Status: <span class="badge bg-<?= 
+                                                            $doc['status'] === 'Approved' ? 'success' : 
+                                                            ($doc['status'] === 'Rejected' ? 'danger' : 'warning') 
+                                                        ?>"><?= $doc['status'] ?></span>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                class="btn btn-sm btn-outline-primary view-pdf-btn" 
+                                                data-file="<?= htmlspecialchars($doc['file_path']) ?>">
+                                                VIEW
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
                     <?php else: ?>
                         <!-- Message displayed if user is not on a team -->
                         <div class="alert alert-info mt-4">
@@ -262,36 +314,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
                         </div>
                     <?php endif; ?>
                 </div>
-            </div>
-
-            <div class="evalcon" style="margin: 30px 0 30px 0;">
-                <h4>Versions</h4>
-                <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
-
-                <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
-                    <thead>
-                        <tr>
-                            <th style="padding: 6px;">Title</th>
-                            <th style="padding: 6px;">Version</th>
-                            <th style="padding: 6px;">Date Uploaded</th>                    
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($versions)): ?>
-                            <?php foreach ($versions as $doc): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($doc['document_name']) ?></td>
-                                    <td><?= htmlspecialchars($doc['version']) ?></td>
-                                    <td><?= date('F d, Y', strtotime($doc['created_at'])) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3">No documents found.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>  
