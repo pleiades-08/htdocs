@@ -202,7 +202,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
                                                         pdfjsLib.getDocument(url).promise.then(function(pdf) {
                                                             for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
                                                                 pdf.getPage(pageNumber).then(function(page) {
-                                                                    const scale = 1.32;
+                                                                    const scale = 1.30;
                                                                     const viewport = page.getViewport({ scale: scale });
 
                                                                     const canvas = document.createElement('canvas');

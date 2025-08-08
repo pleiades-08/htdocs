@@ -14,7 +14,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
     <title>Defense Calendar</title>
     <style>
         .calendar {
-            width: 700px;
+            width: 100%;
+        }
+        .def-tbl {
+            width: 100%;
         }
 
         .controls {
@@ -49,11 +52,16 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
         }
 
         .day.saved {
-            background: #2196F3;
+            background: #74c476;
             color: white;
             cursor: pointer;
         }
-
+        .day.saved:hover {
+            background: white;
+            color: #74c476;
+            cursor: pointer;
+            border: solid 1px #74c476;
+        }
         .day.disabled {
             background: #f0f0f0;
             color: #aaa;
@@ -124,36 +132,91 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     <div id="days"></div>
                 </div>
 
-                <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>@social</td>
-                    </tr>
-                </tbody>
-                </table>
+                <div class="def-tbl">
+                    <h2>Schedule for this month</h2>
+                    <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                    </tbody>
+                    </table>
+                </div>
             </div>
             <!-- Modal -->
             <div id="scheduleModal" class="modal">

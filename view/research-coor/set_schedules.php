@@ -12,13 +12,17 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
     <link rel="stylesheet" href="/css/component.css">
     <style>
         .calendar {
-            max-width: 600px;
-            margin: auto;
+            width: 100%;
+        }
+        .def-tbl {
+            width: 100%;
         }
 
         .controls {
             margin: 10px 0;
             text-align: center;
+            display: flex;
+            gap: 5px;
         }
 
         #days {
@@ -52,9 +56,15 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
         }
 
         .day.saved {
-            background: #2196F3;
+            background: #74c476;
             color: white;
-            cursor: not-allowed;
+            cursor: pointer;
+        }
+        .day.saved:hover {
+            background: white;
+            color: #74c476;
+            cursor: pointer;
+            border: solid 1px #74c476;
         }
 
         .day.disabled {
@@ -68,6 +78,18 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
             display: block;
             padding: 8px 16px;
         }
+        .def-calendar {
+            width: 100%;
+            height: auto;
+            display: flex;
+            gap: 10px;
+        }
+        .calen-buttons{
+            display: flex;
+            width: 100%;
+            margin-top: 10px;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
@@ -77,14 +99,107 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
     <main class="flex-grow-1 p-4">
         <div class="content-page">
-            <div class="calendar">
-                <h2>Defense Calendar</h2>
-                <div class="controls">
-                    <select id="monthSelect"></select>
-                    <select id="yearSelect"></select>
+            <div class="def-calendar">
+                <div class="calendar">
+                    <h2>Defense Calendar</h2>
+                    <p>Set a schedule for Defense</p>
+                    <div class="controls">
+                        <select class="form-select" id="monthSelect"></select>
+                        <select class="form-select" id="yearSelect"></select>
+                    </div>
+                    <div id="days"></div>
+                    <div class="calen-buttons">
+                        <button class="btn btn-success" id="saveButton">Save Selected Dates</button>
+                        <button class="btn btn-primary" id="saveButton">Edit</button>
+                        <button class="btn btn-warning" id="saveButton">Reschedule</button>
+                    </div>
                 </div>
-                <div id="days"></div>
-                <button class="set-btn" id="saveButton">Save Selected Dates</button>
+
+                <div class="def-tbl">
+                    <h2>Schedule for this month</h2>
+                    <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        <td>@fat</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                        <td>@social</td>
+                    </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
