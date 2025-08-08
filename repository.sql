@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2025 at 08:57 AM
+-- Generation Time: Aug 08, 2025 at 10:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -140,6 +140,26 @@ INSERT INTO `document_feedback` (`feedback_id`, `document_id`, `reviewer_id`, `c
 (8, 5, 7, 'asdasd', 'asds', 'asdasdads', 'Proposal', 'approved-major', '2025-08-04 12:06:19', '2025-08-04 12:06:19'),
 (9, 7, 5, 'qwe', 'qwe', 'qwe', 'Proposal', 'approved', '2025-08-05 07:38:50', '2025-08-05 07:38:50'),
 (10, 7, 5, '123123', '12321', '123123', 'Proposal', 'approved', '2025-08-05 07:39:43', '2025-08-05 07:39:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `request_dates`
+--
+
+CREATE TABLE `request_dates` (
+  `request_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `def_date` date NOT NULL,
+  `def_time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `request_dates`
+--
+
+INSERT INTO `request_dates` (`request_id`, `team_id`, `def_date`, `def_time`) VALUES
+(9, 1, '2025-08-08', '17:12:00');
 
 -- --------------------------------------------------------
 
@@ -312,6 +332,13 @@ ALTER TABLE `document_feedback`
   ADD KEY `reviewer_id` (`reviewer_id`);
 
 --
+-- Indexes for table `request_dates`
+--
+ALTER TABLE `request_dates`
+  ADD PRIMARY KEY (`request_id`),
+  ADD UNIQUE KEY `team_id` (`team_id`);
+
+--
 -- Indexes for table `system_settings`
 --
 ALTER TABLE `system_settings`
@@ -376,6 +403,12 @@ ALTER TABLE `documents`
 --
 ALTER TABLE `document_feedback`
   MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `request_dates`
+--
+ALTER TABLE `request_dates`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
