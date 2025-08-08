@@ -11,6 +11,7 @@ if ($id > 0) {
 
         if ($fetch) {
                 $isInTeam = true;
+                $teamId = $fetch['team_id']; 
         }
 }
 ?>

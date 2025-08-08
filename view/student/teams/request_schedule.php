@@ -1,6 +1,7 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
 
 ?>
 <!DOCTYPE html>
@@ -13,13 +14,14 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
     <title>Defense Calendar</title>
     <style>
         .calendar {
-            max-width: 600px;
-            margin: auto;
+            width: 700px;
         }
 
         .controls {
             margin: 10px 0;
             text-align: center;
+            display: flex;
+            gap: 5px;
         }
 
         #days {
@@ -97,66 +99,62 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
             color: red;
         }
         
-        .calendar {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        width: 340px;
+        .def-calendar {
+            width: 100%;
+            height: auto;
+            display: flex;
+            gap: 10px;
         }
-
-        .calendar header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        }
-
-        select {
-        padding: 5px;
-        font-size: 1rem;
-        }
-
-        .days {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-        }
-
-        .day {
-        text-align: center;
-        padding: 10px;
-        border-radius: 5px;
-        }
-
-        .weekday {
-        font-weight: bold;
-        background: #eee;
-        }
-
-        .today {
-        background: #3498db;
-        color: white;
-        font-weight: bold;
-        }
-    </style>
+        </style>
 </head>
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
     <main class="flex-grow-1 p-4">
-        <div class="content-page">
-            <h1 class="text-center mb-4">Defense Calendar</h1>
-            <p class="text-center">Select a date to request a schedule for defense.</p>
-            <div class="calendar">
-                <h2>Defense Calendar</h2>
-                <div class="controls">
-                    <select id="monthSelect"></select>
-                    <select id="yearSelect"></select>
-                </div>
-                <div id="days"></div>
-            </div>
+        <div class="content-page">            
 
+            <div class="def-calendar">
+                <div class="calendar">
+                    <h2>Defense Calendar</h2>
+                    <p class="text-center">Select a date to request a schedule for defense.</p>
+                    <div class="controls">
+                        <select class="form-select" id="monthSelect"></select>
+                        <select class="form-select" id="yearSelect"></select>
+                    </div>
+                    <div id="days"></div>
+                </div>
+
+                <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">3</th>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>@social</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
             <!-- Modal -->
             <div id="scheduleModal" class="modal">
                 <div class="modal-content">
@@ -165,12 +163,12 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
                     <p>Request Form for Defense.</p>
                     <form id="scheduleForm" method="POST">
 
-                        <input type="hidden" name="modalDate" id="modalDate">
+                        <input type="hidden" id="modalDate">
 
                         <label>Time:</label>
                         <input type="time" name="timestart" id="timestart"> <br>
 
-                        <input type="hidden" name="team_id" id="team_id">
+                        <input type="hidden" name="team_id" value ="<?php echo htmlspecialchars($teamId); ?>""id="team_id">
                         <button onclick="reqSchedule()">Submit</button>
                     </form>
                 </div>
@@ -179,6 +177,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
     </main>
 
 <script>
+
     const monthSelect = document.getElementById('monthSelect');
     const yearSelect = document.getElementById('yearSelect');
     const daysContainer = document.getElementById('days');
@@ -269,7 +268,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
     function fetchSavedDates() {
         const y = yearSelect.value;
         const m = parseInt(monthSelect.value) + 1;
-        fetch(`get_saved_dates.php?month=${m}&year=${y}`)
+        fetch(`/actions/get_saved_dates.php?month=${m}&year=${y}`)
             .then(res => res.json())
             .then(data => {
                 savedDates = new Set(data);
@@ -280,7 +279,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
     function reqSchedule() {
         if (selectedModalDate) {
             const form = document.getElementById('scheduleForm');
-            form.action = `add_schedule.php?date=${selectedModalDate}`;
+            form.action = `/actions/add_schedule.php?date=${selectedModalDate}`;
             form.submit();
         }
     }
