@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 // Fetch current adviser using your existing method
 $id = $_SESSION['user'];
@@ -131,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page"> 
             <div class="col-md-10">
                 <div class="container mt-5">
@@ -219,7 +218,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             updateDropdownOptions();
         });
     </script>
-
     <script src="../../js/components.js"></script>
 </body>
 </html>

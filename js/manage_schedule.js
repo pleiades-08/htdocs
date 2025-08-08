@@ -1,81 +1,3 @@
-<?php include '../dbconnect.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Defense Calendar</title>
-    <style>
-        .calendar {
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .controls {
-            margin: 10px 0;
-            text-align: center;
-        }
-
-        #days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr); /* 7 days per week */
-            gap: 2px;
-        }
-
-        .day {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            min-height: 50px;
-        }
-
-        .day.weekday {
-            font-weight: bold;
-            background: #eee;
-            cursor: default;
-        }
-
-        .day.today {
-            background: #ffd700;
-        }
-
-        .day.selected {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .day.saved {
-            background: #2196F3;
-            color: white;
-            cursor: not-allowed;
-        }
-
-        .day.disabled {
-            background: #f0f0f0;
-            color: #aaa;
-            cursor: not-allowed;
-        }
-
-        button {
-            margin: 10px auto;
-            display: block;
-            padding: 8px 16px;
-        }
-    </style>
-</head>
-<body>
-<div class="calendar">
-    <h2>Defense Calendar</h2>
-    <div class="controls">
-        <select id="monthSelect"></select>
-        <select id="yearSelect"></select>
-    </div>
-    <div id="days"></div>
-    <button id="saveButton">Save Selected Dates</button>
-</div>
-
-<script>
 const monthSelect = document.getElementById('monthSelect');
 const yearSelect = document.getElementById('yearSelect');
 const daysContainer = document.getElementById('days');
@@ -164,7 +86,7 @@ function renderCalendar(year, month) {
 function fetchSavedDates() {
     const y = yearSelect.value;
     const m = parseInt(monthSelect.value) + 1;
-    fetch(`get_saved_dates.php?month=${m}&year=${y}`)
+    fetch(`/actions/get_saved_dates.php?month=${m}&year=${y}`)
         .then(res => res.json())
         .then(data => {
             savedDates = new Set(data);
@@ -175,7 +97,7 @@ function fetchSavedDates() {
 
 saveButton.addEventListener('click', () => {
     if (selectedDates.size === 0) return alert("No dates selected.");
-    fetch('save_dates.php', {
+    fetch('/actions/save_dates.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ dates: [...selectedDates] })
@@ -192,6 +114,3 @@ yearSelect.addEventListener('change', fetchSavedDates);
 
 populateSelectors();
 fetchSavedDates();
-</script>
-</body>
-</html>

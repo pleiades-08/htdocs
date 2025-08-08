@@ -1,7 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamdisplay.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
 ?>
@@ -60,24 +59,21 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
 
-<main>
+<main class="flex-grow-1 p-4">
     <div class="content-page">
         <h1>Workspace</h1><br>
         <h3>Capstone Teams</h3>
 
-        <div class="table-responsive">
-            <table class="table align-middle table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
+            <table class="table table-striped table-hover mb-4"  id="activeTable">
                 <thead>
                     <tr>
                         <th>Title</th>
                         <th>Authors</th>
-                        <th>Research</th>
                         <th>Adviser</th>
                         <th>Technical</th>
                         <th>Chairperson</th>
                         <th>Major</th>
                         <th>Minor</th>
-                        <th>Panelist</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -98,13 +94,11 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
                                         }
                                     ?>
                                 </td>
-                                <td><?= htmlspecialchars($team['capstone_type']) ?></td>
                                 <td><?= htmlspecialchars($team['adviser_name']) ?></td>
                                 <td><?= htmlspecialchars($team['technical_name']) ?></td>
                                 <td><?= htmlspecialchars($team['chairman_name']) ?><br></td>
                                 <td><?= htmlspecialchars($team['major_name']) ?><br></td>
                                 <td><?= htmlspecialchars($team['minor_name']) ?><br></td>
-                                <td><?= htmlspecialchars($team['panelist_name']) ?><br></td>
                                 <td>
                                     <button 
                                         type="button" 
@@ -126,7 +120,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
                     <?php endif; ?>
                 </tbody>
             </table>
-        </div>  
         <!-- Modal -->
         <div id="assignModal" class="modal">
             <div class="modal-content">
@@ -200,6 +193,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
 
     </div>
 </main>
+
 <script>
     const modal = document.getElementById('assignModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -259,6 +253,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchPanelRole.php';
     }
     selects.forEach(select => select.addEventListener('change', updateOptions));
 </script>
+
 
 </body>
 </html>

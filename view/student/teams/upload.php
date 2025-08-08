@@ -20,7 +20,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
     
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <div class="col-md-3"></div>
 

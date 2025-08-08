@@ -1,7 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamsController.php'; // This is where $team is likely populated
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/validateTeamController.php'; // This is where $team is likely populated
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
@@ -20,7 +19,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
     
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <div class="col-md-3"></div>
 

@@ -54,10 +54,9 @@ li a:hover:not(.active) {
   justify-content: center;
 }
 .content-page{
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   align-items: flex-start;
-  margin-left: 15%;
   display: flex;
   padding: 20px;
   gap: 20px;
@@ -266,12 +265,13 @@ form#teamForm {
   width: 55dvw;
   height: 900px;
   overflow: auto;
-  align-items: 
-  flex-start;
+  align-items: flex-start;
   background-color: #74c47673;
   flex-wrap: wrap;
   align-content: flex-start;
-  justify-content: center;}
+  justify-content: center;
+  border: solid 1px #74c476;
+}
 
 
 
@@ -294,10 +294,12 @@ form#teamForm {
 }
 
 .student-team {
+    width: 100%;
     display: flex;
+    flex-direction: row;
     gap: 20px;
+    justify-content: space-around;
 }
-
 
 .accordion {
   background-color: #74C476;

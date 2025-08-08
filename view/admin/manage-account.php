@@ -2,7 +2,6 @@
 // Database connection
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 ?>
 
@@ -53,7 +52,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 
 </head>
-<body class="sb-expanded">
+<body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -68,7 +67,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
     </symbol>
     </svg>
 
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <div class="add-acc" style="padding: 30px">
                 <div class="manage-acc">

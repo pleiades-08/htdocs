@@ -21,6 +21,7 @@ $routes = [
     'research-coor-documents' => '../view/research-coor/research-coor-documents.php',
     'research-coor-profile' => '../view/research-coor/research-coor-profile.php',
     'research-coor-manage_roles' => '../view/research-coor/manage_roles.php',
+    'research-coor-set_schedules' => '../view/research-coor/set_schedules.php',
 
     //Faculty router
     'imacs-home' => '../view/imacs/imacs-home.php',

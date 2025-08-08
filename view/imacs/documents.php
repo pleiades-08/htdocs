@@ -1,5 +1,4 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchUserType.php';
 require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchDocumentsController.php';
 require $_SERVER['DOCUMENT_ROOT'] . './actions/verify-users.php';
 require $_SERVER['DOCUMENT_ROOT'] . './controllers/searchDocuments.php';
@@ -44,7 +43,7 @@ try{
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <h1 style="margin: 100px 50px 50px 50px;">Document Revision Tracking</h1>
                 <div class="search">
@@ -93,6 +92,7 @@ try{
                 ?>
         </div>
     </main>
+
 
 </body>
 </html>

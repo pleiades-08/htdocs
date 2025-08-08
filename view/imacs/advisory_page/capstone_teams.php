@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../../actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUser.php';
 
 $current_user_statement = $pdo->query("SELECT * FROM users WHERE user_id = " . (int)$id); // Example, assuming $id is globally available and safe
 $current_user = $current_user_statement->fetch(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ if ($teamd !== null) {
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <div class="modal fade  " id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
                 <div class="modal-dialog custome-modal-width">

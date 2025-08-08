@@ -1,6 +1,5 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
 
 
@@ -24,8 +23,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-    <main>
-        <div class="content-page">
+    <main class="flex-grow-1 p-4">
+        <div class="content-page ">
             <div class="student-team">
                 <div class="container-t">
                     
@@ -203,7 +202,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
                                                         pdfjsLib.getDocument(url).promise.then(function(pdf) {
                                                             for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
                                                                 pdf.getPage(pageNumber).then(function(page) {
-                                                                    const scale = 1.1;
+                                                                    const scale = 1.32;
                                                                     const viewport = page.getViewport({ scale: scale });
 
                                                                     const canvas = document.createElement('canvas');

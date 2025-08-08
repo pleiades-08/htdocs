@@ -17,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
 </head>
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
 
         </div>

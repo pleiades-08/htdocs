@@ -1,6 +1,5 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
     <br>
 
     
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <h1 style="margin: 100px 50px 50px 50px;">THIS IS THE PROFILE PAGE</h1>
             <form action="submit_evaluation.php" method="POST">

@@ -1,49 +1,386 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Floating Label Input</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    .form-group {
-      position: relative;
-      margin: 20px 0;
+    :root {
+  --hover-green: #5da763;
+}
+
+.ctm-margin {
+  margin-left:-11px;
+}
+
+#sidebar {
+  background: #74C476;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 999;
+  transition: width 0.3s ease;
+}
+
+/* Sidebar states */
+.sidebar-collapsed {
+  width: 4.5vw !important;
+  overflow-y: auto;
+}
+
+.sidebar-expanded {
+  width: 18vw !important;
+  overflow-y: auto;
+}
+
+.sidebar-collapsed::-webkit-scrollbar,
+.sidebar-expanded::-webkit-scrollbar {
+  display: none;
+}
+
+/* Button styles */
+#sidebar button {
+  white-space: nowrap;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  background: transparent;
+  border: none;
+}
+
+#sidebar nav button:hover {
+  transform: scale(1.05);
+  background-color: #e9f5ec;
+}
+
+/* Icon visibility */
+#sidebar .icon svg {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+/* Icon hover (optional) */
+#sidebar button:hover .icon svg {
+  color: white; /* You can change this if desired */
+}
+
+/* Label hover color */
+#sidebar nav button:hover .label {
+  color: var(--hover-green);
+}
+
+/* Hide label when collapsed */
+.label-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Show label when expanded */
+.label-visible {
+  opacity: 1;
+  white-space: normal;
+  text-align: start;
+  transition: opacity 0.3s ease;
+  width: auto;
+}
+
+/* Toggle button fix */
+.toggle-btn {
+  padding-left: 12px;
+}
+#sidebar nav .btn{
+    padding:5px;
+}
+
+    body {
+      background-color: #f3f4f6;
+      min-height: 100vh;
+      display: flex;
     }
 
-    .form-input {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: none;
+    #sidebar {
+      background: #74C476;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 999;
+      transition: width 0.3s ease;
     }
 
-    .form-label {
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      color: #999;
-      background: white;
-      padding: 0 4px;
-      transition: 0.2s ease all;
+    .sidebar-collapsed {
+      width: 4.5vw !important;
+      overflow-y: scroll;
+    }
+
+    .sidebar-expanded {
+      width: 18vw !important;
+      overflow-y: scroll;
+    }
+
+    .sidebar-collapsed::-webkit-scrollbar,
+    .sidebar-expanded::-webkit-scrollbar {
+      display: none;
+    }
+
+    #sidebar button {
+      white-space: nowrap;
+      transform: scale(1);
+      transition: transform 0.5s ease-in-out, color 0.5s ease-in-out;
+    }
+
+    #sidebar svg {
+      color: white;
+      transition: color 0.8s ease;
+    }
+
+    #sidebar nav .btn:hover svg {
+      color: #74C476 !important;
+    }
+
+    #sidebar button span {
+      transition: color 0.5s ease-in-out;
+    }
+
+    .label-hidden {
+      opacity: 0;
       pointer-events: none;
     }
 
-    .form-input:focus + .form-label,
-    .form-input:not(:placeholder-shown) + .form-label {
-      top: -8px; /* moves label up */
-      left: 8px;
-      /* font-size stays the same */
-      color: #333;
+    .label-visible {
+      opacity: 1;
+      white-space: normal;
+      text-align: start;
+    }
+
+    .toggle-btn {
+      padding-left: 12px;
+    }
+  
+    a {
+      text-decoration:none!important;
     }
   </style>
 </head>
 <body>
 
-  <div class="form-group">
-    <input type="text" class="form-input" placeholder=" " id="email">
-    <label class="form-label" for="email">Email Address</label>
-  </div>
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar-collapsed d-flex flex-column shadow">
+    <button onclick="toggleSidebar()" class="btn bg-transparent border-0 toggle-btn ">
+        <!-- Hamburger Icon -->
+        <span class="icon">
+          <svg class="bi bi-list" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M2.5 12.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11z"/>
+          </svg>
+        </span>
+    </button>
 
+    <nav class="d-flex flex-column mt-3 gap-2 px-2">
+        <?php if ($_SESSION['user_role']) : ?>
+            
+            <?php if ($_SESSION['is_faculty']) : ?>
+                <!-- Icon always visible -->
+                <button onclick="window.location.href='/imacs-home'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8v-10h-8v10zm0-18v6h8V3h-8z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Home</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-dashboard'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.7 0 8 1.35 8 4v2H4v-2c0-2.65 5.3-4 8-4zm0-2a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Dashboard</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-capstone_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M2 6h20v2H2V6zm0 5h20v2H2v-2zm0 5h20v2H2v-2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Capstone Team</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-capstone_titles'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Capstone Titles</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-documents'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Documents</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-add_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Add Teams</span>
+                </button>
+
+                <button onclick="window.location.href='/imacs-profile'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Profile</span>
+                </button>
+
+                <?php if ($_SESSION['is_admin']): ?>
+                    <button onclick="window.location.href='/admin-manage'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Manage Account</span>
+                    </button>
+                <?php endif; ?>
+
+                <?php if ($_SESSION['is_coordinator']): ?>
+                    <button onclick="window.location.href='/research-coor-manage_roles'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Manage Roles</span>
+                    </button>
+
+                    <button onclick="window.location.href='/research-coor-set_schedules'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Set Schedules</span>
+                    </button>
+                <?php endif; ?>
+
+            <?php endif; ?>
+
+            <?php if ($_SESSION['is_student']) : ?>
+                <button onclick="window.location.href='/student-home'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Home</span>
+                </button>
+
+                <button onclick="window.location.href='/student-dashboard'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Dashboard</span>
+                </button>
+
+                <?php if ($isInTeam): ?>
+                    <button onclick="window.location.href='/student-capstone_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Capstone Team</span>
+                    </button>
+
+                    <button onclick="window.location.href='/student-upload'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Upload</span>
+                    </button>
+
+                    <button onclick="window.location.href='/student-request_schedule'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Schedule</span>
+                    </button>
+                <?php else: ?>
+                    <button onclick="window.location.href='/student-no_team'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                        <span class="icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                            </svg>
+                        </span>
+                        <span class="label label-hidden">Teams</span>
+                    </button>
+                <?php endif; ?>
+                
+                <button onclick="window.location.href='/student-profile'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Profile</span>
+                </button>    
+            <?php endif; ?>
+
+            <button onclick="window.location.href='/logout'" class="btn d-flex align-items-center gap-3 text-white fw-bold">
+                <span class="icon">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm1-17v6h-2V5h2zm0 8v2h-2v-2h2z" />
+                    </svg>
+                </span>
+                <span class="label label-hidden">Logout</span>
+            </button>
+
+        <?php endif; ?>
+    </nav>                  
+</div>
+  <!-- Main Content -->
+  <main class="flex-grow-1 p-4">
+    <h1 class="h4 fw-bold mb-3">Dummy Sidebar Navigation</h1>
+    <p class="text-muted">Toggle the sidebar to test expansion behavior with text labels.</p>
+  </main>
+
+  <!-- Bootstrap JS (for any potential future use) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const sidebar = document.getElementById("sidebar");
+
+    function toggleSidebar() {
+      sidebar.classList.toggle("sidebar-expanded");
+      sidebar.classList.toggle("sidebar-collapsed");
+
+      document.querySelectorAll(".label").forEach(label => {
+        label.classList.toggle("label-visible");
+        label.classList.toggle("label-hidden");
+      });
+    }
+  </script>
 </body>
 </html>

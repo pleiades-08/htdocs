@@ -1,7 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 
 ?>
 <!DOCTYPE html>
@@ -145,7 +144,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <h1 class="text-center mb-4">Defense Calendar</h1>
             <p class="text-center">Select a date to request a schedule for defense.</p>

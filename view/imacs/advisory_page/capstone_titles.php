@@ -1,8 +1,8 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchUserType.php';
 require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchDocumentsController.php';
 require $_SERVER['DOCUMENT_ROOT'] . './actions/verify-users.php';
 require $_SERVER['DOCUMENT_ROOT'] . './controllers/searchDocuments.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUser.php';
 
 try{
 
@@ -44,7 +44,7 @@ try{
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <div class="col-md-3"></div>
             <h1 style="margin: 100px 50px 50px 50px;">Document Revision Tracking</h1>
@@ -77,7 +77,7 @@ try{
                                     <td><?= $row['version'] ?></td>
                                     <td><?= $row['status'] ?></td>
                                     <td>
-                                    <a href="../../controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
+                                    <a href="/controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
                                         View
                                     </a></td>
                                 </td>

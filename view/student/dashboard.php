@@ -1,7 +1,7 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']  . './actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -17,13 +17,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
 <body>
     <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <h1 class="text-center my-5">Dashboard</h1>
             <p class="text-center">Welcome to the IMACS Dashboard!</p>
             <p class="text-center">Here you can manage your documents, teams, and more.</p>
         </div>
     </main>
+
 
 </body>
 </html>

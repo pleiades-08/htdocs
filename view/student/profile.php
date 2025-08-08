@@ -1,6 +1,5 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . './actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchUserType.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,18 +12,18 @@ require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchUserType.php';
     <link rel="stylesheet" href="/css/component.css">
     <title>STUDENT | Profile</title>
 </head>
-<body class="bg-gray-100 flex min-h-screen">
+<body>
     
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
-    <main>
+    <main class="flex-grow-1 p-4">
         <div class="content-page">
             <h1 style="margin: 100px 50px 50px 50px;">THIS IS THE DASHBOARD PAGE</h1>
             <form action="submit_evaluation.php" method="POST">
             <input type="hidden" name="student_id" value="123"> <!-- dynamic -->
         </div>
     </main> 
-
+    
 </div>
 </body>
 </html>

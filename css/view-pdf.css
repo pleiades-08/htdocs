@@ -61,7 +61,7 @@ padding: 8px;
 }
 
 .comment{
-  width: 45vw;
+  width: 700px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -81,9 +81,10 @@ iframe{
 
 .pdf-section{
   display: flex;
-  /* margin: 1rem 1rem 0rem 1rem; */
   gap: 10px;
+  justify-content: space-between;
 }
+
 .custom-width{
   display: flex;
   align-items: center;
@@ -97,29 +98,6 @@ iframe{
   z-index: 1000;   /* Ensure it stays above other content */
 }
 
-.sidebar {
-  height: 100vh;
-  width: 15vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #2c3e50;
-  padding-top: 20px;
-  margin-top: 10vh;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-}
-
-.sidebar a {
-  display: block;
-  color: white;
-  padding: 15px;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.sidebar a:hover {
-  background-color: #34495e;
-}
 
 
 .content{
@@ -127,28 +105,16 @@ iframe{
   justify-content: center;
 }
 .content-page{
-  width: 100%;
+  width: auto;
   height: auto;
   align-content: center;
   align-items: center;
-  /* margin: 10vh 0 0 0; */
 }
 .upload{
   margin-top: 10px;
 }
 
-#pdf-container{
-display: flex;
-width: 55dvw;
-height: 3000px;
-overflow: auto;
-align-items: flex-start;
-/* margin: 20px 0px 10px 0px; */
-background-color: #74c47673;
-flex-wrap: wrap;
-align-content: flex-start;
-justify-content: center;
-}
+#pdf-container{display: flex;width: 800px;height: 3000px;overflow: auto;align-items: flex-start;background-color: #74c47673;flex-wrap: wrap;align-content: flex-start;justify-content: center;}
 
 canvas{
   margin: 50px 0 10px 0;
@@ -265,13 +231,7 @@ font-size:22px;
 font-weight:600;
 }
 
-.evalcon {
-display: flex;
-padding: 30px 2%;
-border:1px solid #238b458f;
-flex-direction: column;
-width: 45vw;
-}
+.evalcon {display: flex;padding: 30px 2%;border:1px solid #238b458f;flex-direction: column;width: 100%;}
 
 #evalhead {
 font-size:26px;
@@ -279,14 +239,7 @@ font-weight:700;
 margin-bottom:20px;
 } 
 
-.evalbtn {
-display: flex;
-flex-direction: row;
-gap: 10px;
-flex-wrap: wrap;
-justify-content: space-evenly;
-margin: 30px 0 30px 0;
-}
+.evalbtn {display: flex;flex-direction: row;gap: 20px;flex-wrap: wrap;justify-content: space-evenly;margin: 30px 0 30px 0;}
 
 .evalbtn label{
 font-size:30px;
@@ -312,11 +265,7 @@ color:white;
 font-size:16px;
 }
 
-.btnctm2 {
-background:white;
-color:#74C476;
-font-size:16px;
-}
+.btnctm2 {background:white;color:#74C476;font-size: 17px;}
 
 form.evalbtn {
 display: flex;
@@ -326,18 +275,9 @@ flex-wrap: nowrap;
 justify-content: flex-start;
 }
 
-.evalbtn select {
-font-size: 13px;
-color:#0000008f;
-border:1px solid #74c476d4;
-}
+.evalbtn select {font-size: 13px;color:#0000008f;border:1px solid #74c476d4;width: auto;}
 
-.evalbtn label {
-font-size: 30px;
-font-family: inter;
-position: relative;
-top: 6px;
-}
+.evalbtn label {font-size: 30px;font-family: inter;position: relative;top: 6px;}
 
 
 .panel.chapter-content.show.open {
@@ -650,4 +590,8 @@ margin-bottom: 0;
 #data_table .btn-primary {
   background:#3498dbd1;
   border:none;
+}
+
+.comment-sections {
+    overflow-x: auto;
 }

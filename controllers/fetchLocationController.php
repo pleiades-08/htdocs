@@ -14,6 +14,7 @@ $id = $_GET['id'];
         $sql->execute();
         $fetch = $sql->fetch();
 
+
 $team_id = $_GET['td'];    
 $role = $fetch['user_type'] ?? '';
 $progress = $_GET['progress'] ?? '';
@@ -36,7 +37,7 @@ if (empty($progress) || empty($file)) {
 
 // Define base route path by role
 $routePrefix = '';
-if ($role === 'faculty') {
+if ($role === 'faculty' || $role === 'admin' || $role === 'coordinator') {
     $routePrefix = 'imacs';
 } elseif ($role === 'student') {
     $routePrefix = 'student';
