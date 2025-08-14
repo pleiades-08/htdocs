@@ -41,6 +41,7 @@ try{
 </head>
 <body>
     
+    
     <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
     <br>
 
@@ -55,40 +56,42 @@ try{
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>
-                <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
-                    <tr>
-                        <th scope="col">Uploaded by</th>
-                        <th scope="col">Team ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Date Uploaded</th>
-                        <th scope="col">Capstone Progress</th>
-                        <th scope="col">Version No.</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                        <?php if ($documents): ?>
-                            <?php foreach ($documents as $row): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($row['uploader_full_name']) ?></td>
-                                    <td><?= htmlspecialchars($row['team_id']) ?></td>
-                                    <td><?= htmlspecialchars($row['document_name']) ?></td>
-                                    <td><?= $row['created_at'] ?></td>
-                                    <td><?= $row['capstone_type'] ?></td>
-                                    <td><?= $row['version'] ?></td>
-                                    <td><?= $row['status'] ?></td>
-                                    <td>
-                                    <a href="/controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
-                                        View
-                                    </a></td>
-                                </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-4" style="width: 100%;" id="data_table">
                         <tr>
-                            <td colspan="8" style="text-align:center;">No documents found.</td>
+                            <th scope="col">Uploaded by</th>
+                            <th scope="col">Team ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Date Uploaded</th>
+                            <th scope="col">Capstone Progress</th>
+                            <th scope="col">Version No.</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
                         </tr>
-                    <?php endif; ?>
-                </table>
+                            <?php if ($documents): ?>
+                                <?php foreach ($documents as $row): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['uploader_full_name']) ?></td>
+                                        <td><?= htmlspecialchars($row['team_id']) ?></td>
+                                        <td><?= htmlspecialchars($row['document_name']) ?></td>
+                                        <td><?= $row['created_at'] ?></td>
+                                        <td><?= $row['capstone_type'] ?></td>
+                                        <td><?= $row['version'] ?></td>
+                                        <td><?= $row['status'] ?></td>
+                                        <td>
+                                        <a href="/controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
+                                            View
+                                        </a></td>
+                                    </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                            <tr>
+                                <td colspan="8" style="text-align:center;">No documents found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
                 <?php
                 exit();
                 ?>

@@ -16,25 +16,30 @@ function showEval(selectedValue) {
         },
         dataType: 'json', // <-- tell jQuery to expect JSON
         success: function(data) {
+            console.log(data);
             // Data is an array of objects
             if (Array.isArray(data) && data.length > 0) {
                     let commentsHTML = '';
                     let suggestionsHTML = '';
                     let revisionsHTML = '';
+                    let remarksHTML = '';
 
                     data.forEach(entry => {
                     commentsHTML += `<p>${entry.comments}</p>`;
                     suggestionsHTML += `<p>${entry.suggestions}</p>`;
                     revisionsHTML += `<p>${entry.required_revisions}</p>`;
+                    remarksHTML += `<p>${entry.remarks}</p>`;
                     });
 
                     $('#commentsTd').html(commentsHTML);
                     $('#suggestionsTd').html(suggestionsHTML);
                     $('#revisionsTd').html(revisionsHTML);
+                    $('#remarksTd').html(remarksHTML);
                 } else {
                     $('#commentsTd').html('No comments.');
                     $('#suggestionsTd').html('No suggestions.');
                     $('#revisionsTd').html('No revisions.');
+                    $('#remarksTd').html('No remarks.');
                 }
             },
         error: function(xhr, status, error) {

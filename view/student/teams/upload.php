@@ -70,7 +70,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
                             
                             <div class="mb-3">
                                 <label for="document" class="form-label">Select File (PDF or Word)</label>
-                                <input class="form-control" type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
+                                <input class="form-control" type="file" id="document" name="document" accept=".pdf" required>
                                 <div class="form-text">Maximum file size: 300MB</div>
                             </div>
                             
@@ -123,14 +123,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
             </div>
         </div>
     </main>
-<script src="../../js/components.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
     document.getElementById('document').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const maxSize = 20 * 1024 * 1024; // 20MB
-        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const allowedTypes = ['application/pdf'];
         
         if (file.size > maxSize) {
             alert('File size exceeds 20MB limit');
@@ -138,7 +137,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/upload-file.php';
         }
         
         if (!allowedTypes.includes(file.type)) {
-            alert('Only PDF and Word documents are allowed');
+            alert('Only PDF documents are allowed');
             e.target.value = '';
         }
     });

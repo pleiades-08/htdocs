@@ -45,6 +45,10 @@ $team_id = $_GET['td'];
         $teamData = $results[0];
         $user_is_on_team = true;
 
+        $stmt_docs = $pdo->prepare("SELECT * FROM documents WHERE team_id = ?");
+            $stmt_docs->execute([$teamData['team_id']]);
+            $documents = $stmt_docs->fetchAll(PDO::FETCH_ASSOC);
+
     } else {
         $error = "Detailed team data not found for your assigned team. Please contact support.";
         $user_is_on_team = false; 

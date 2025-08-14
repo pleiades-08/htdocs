@@ -13,7 +13,7 @@ if (!$chapter_no || !$documentId || !$reviewerId) {
     exit;
 }
 
-$stmt = $pdo->prepare("SELECT comments, suggestions, required_revisions
+$stmt = $pdo->prepare("SELECT comments, suggestions, required_revisions, remarks AS remarks
                         FROM document_feedback
                         WHERE document_id = :document_id
                         AND reviewer_id = :reviewer_id

@@ -7,6 +7,15 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('../assets/img/kldbg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 
 #pdf-viewer {
@@ -117,6 +126,7 @@ iframe{
 #pdf-container{display: flex;width: 800px;height: 3000px;overflow: auto;align-items: flex-start;background-color: #74c47673;flex-wrap: wrap;align-content: flex-start;justify-content: center;}
 
 canvas{
+  width: 100%;
   margin: 10px 0 10px 0;
 }
 textarea {
@@ -231,7 +241,7 @@ font-size:22px;
 font-weight:600;
 }
 
-.evalcon {display: flex;padding: 30px 2%;border:1px solid #238b458f;flex-direction: column;width: 100%;}
+.evalcon {display: flex;padding: 30px 2%;border:1px solid #238b458f;flex-direction: column;width: 100%;background: white;}
 
 #evalhead {
 font-size:26px;
@@ -307,22 +317,7 @@ color: inherit;
 text-decoration: none;
 }
 
-/* Modal styles */
-.modal {
-  display: none; 
-  position: fixed;
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.4); 
-  justify-content: center; 
-  align-items: center;
-  opacity: 0; 
-  transition: opacity 0.3s ease-out; 
-}
+
 
 
 /* Modal styles */

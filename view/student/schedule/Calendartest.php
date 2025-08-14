@@ -215,7 +215,7 @@ function renderCalendar(year, month) {
 function fetchSavedDates() {
     const y = yearSelect.value;
     const m = parseInt(monthSelect.value) + 1;
-    fetch(`get_saved_dates.php?month=${m}&year=${y}`)
+    fetch(`/actions/get_saved_dates.php?month=${m}&year=${y}`)
         .then(res => res.json())
         .then(data => {
             savedDates = new Set(data);

@@ -22,6 +22,7 @@ $routes = [
     'research-coor-profile' => '../view/research-coor/research-coor-profile.php',
     'research-coor-manage_roles' => '../view/research-coor/manage_roles.php',
     'research-coor-set_schedules' => '../view/research-coor/set_schedules.php',
+    'research-coor-view_schedules' => '../view/research-coor/view_schedules.php',
 
     //Faculty router
     'imacs-home' => '../view/imacs/imacs-home.php',
@@ -37,6 +38,7 @@ $routes = [
     'imacs-capstone_titles' => '../view/imacs/advisory_page/capstone_titles.php',
     'imacs-capstone_eval' => '../view/imacs/advisory_page/capstone_eval.php',
     'imacs-add_teams' => '../view/imacs/advisory_page/add_teams.php',
+    'imacs-panel_tab' => '../view/imacs/advisory_page/panel_tab.php',
 
     //student router
     'student-home' => '../view/student/student-home.php',

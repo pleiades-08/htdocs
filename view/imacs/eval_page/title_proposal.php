@@ -181,6 +181,12 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
                                 <td id="revisionsTd" class="loading">Select an evaluation type to view details.</td>
                             </tr>
                         </table>
+                        <table>
+                            <tr>
+                                <th>Status:</th>
+                                <td id="remarksTD" class="loading">Select an evaluation type to view details.</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
 

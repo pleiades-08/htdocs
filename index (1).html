@@ -1,21 +1,183 @@
-<?php
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUserType.php';
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sidebar Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+  --hover-green: #5da763;
+}
 
-$userType = $side['user_type'] ?? null;
-$_SESSION['user_role'] = $userType;
+.ctm-margin {
+  margin-left:-11px;
+}
 
-// Set role flags
-$_SESSION['is_admin'] = ($userType === 'admin');
-$_SESSION['is_coordinator'] = ($userType === 'coordinator');
-$_SESSION['is_faculty'] = in_array($userType, ['faculty', 'admin', 'coordinator']);
-$_SESSION['is_student'] = ($userType === 'student');
+.sidebar-collapsed .label {
+  display: none;
+}
 
-require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
+.sidebar-expanded .label {
+  display: inline-block;
+}    
+    
+#sidebar {
+  background: #74C476;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 999;
+  transition: width 0.3s ease;
+}
 
-?>
+/* Sidebar states */
+.sidebar-collapsed {
+  width: 5vw !important;
+  overflow-y: auto;
+}
 
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar-collapsed d-flex flex-column shadow">
+.sidebar-expanded {
+  width: 18vw !important;
+  overflow-y: auto;
+}
+
+.sidebar-collapsed::-webkit-scrollbar,
+.sidebar-expanded::-webkit-scrollbar {
+  display: none;
+}
+
+/* Button styles */
+#sidebar button {
+  white-space: nowrap;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  background: transparent;
+  border: none;
+}
+
+#sidebar nav button:hover {
+  transform: scale(1.05);
+  background-color: #e9f5ec;
+}
+
+/* Icon visibility */
+#sidebar .icon svg {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+/* Icon hover (optional) */
+#sidebar button:hover .icon svg {
+  color: white; /* You can change this if desired */
+}
+
+/* Label hover color */
+#sidebar nav button:hover .label {
+  color: var(--hover-green);
+}
+
+/* Hide label when collapsed */
+.label-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  width: 0;
+  overflow: hidden;
+}
+
+/* Show label when expanded */
+.label-visible {
+  opacity: 1;
+  white-space: normal;
+  text-align: start;
+  transition: opacity 0.3s ease;
+  width: auto;
+}
+
+/* Toggle button fix */
+.toggle-btn {
+  padding-left: 12px;
+}
+#sidebar nav .btn{
+    padding:5px;
+}
+
+    body {
+      background-color: #f3f4f6;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    #sidebar {
+      background: #74C476;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 999;
+      transition: width 0.3s ease;
+    }
+
+    .sidebar-collapsed {
+      width: 4.5vw !important;
+      overflow-y: scroll;
+    }
+
+    .sidebar-expanded {
+      width: 18vw !important;
+      overflow-y: scroll;
+    }
+
+    .sidebar-collapsed::-webkit-scrollbar,
+    .sidebar-expanded::-webkit-scrollbar {
+      display: none;
+    }
+
+    #sidebar button {
+      white-space: nowrap;
+      transform: scale(1);
+      transition: transform 0.5s ease-in-out, color 0.5s ease-in-out;
+    }
+
+    #sidebar svg {
+      color: white;
+      transition: color 0.8s ease;
+    }
+
+    #sidebar nav .btn:hover svg {
+      color: #74C476 !important;
+    }
+
+    #sidebar button span {
+      transition: color 0.5s ease-in-out;
+    }
+
+    .label-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .label-visible {
+      opacity: 1;
+      white-space: normal;
+      text-align: start;
+    }
+
+    .toggle-btn {
+      padding-left: 12px;
+    }
+  
+    a {
+      text-decoration:none!important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar-collapsed d-flex flex-column shadow">
     <button onclick="toggleSidebar()" class="btn bg-transparent border-0 toggle-btn"
             >
         <!-- Hamburger Icon -->
@@ -30,10 +192,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
             <?php if ($_SESSION['is_faculty']) : ?>
                 <!-- Icon always visible -->
                 <button onclick="window.location.href='/imacs-home'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Home"
-                        >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Home"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="m23.353 10.439-.002-.002-9.79-9.79A2.194 2.194 0 0 0 12 0c-.59 0-1.145.23-1.563.647L.652 10.432l-.01.01a2.212 2.212 0 0 0 .004 3.12 2.197 2.197 0 0 0 1.534.648h.39v7.204A2.589 2.589 0 0 0 5.156 24h3.83a.703.703 0 0 0 .704-.703v-5.649c0-.65.529-1.18 1.18-1.18h2.259c.65 0 1.18.53 1.18 1.18v5.649c0 .388.314.703.702.703h3.83a2.589 2.589 0 0 0 2.587-2.586V14.21h.361c.59 0 1.145-.23 1.563-.648.86-.86.86-2.261 0-3.123Z" />
@@ -43,10 +205,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-dashboard'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                    data-bs-toggle="tooltip" 
-                    data-bs-placement="right" 
-                    title="Dashboard">
 
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Dashboard">
                     <span class="icon">
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M6.02 2.75a3.306 3.306 0 0 0-3.293 3.293v11.913A3.306 3.306 0 0 0 6.02 21.25h11.956a3.306 3.306 0 0 0 3.294-3.294V6.043a3.306 3.306 0 0 0-3.294-3.294H6.02Zm0 1.813h11.956c.835 0 1.477.645 1.477 1.48v.273H4.543v-.273c0-.835.642-1.48 1.477-1.48Zm-1.477 3.57h14.91v9.823c0 .835-.642 1.48-1.477 1.48H6.02a1.455 1.455 0 0 1-1.477-1.48V8.133Zm8.502.487a.553.553 0 0 0-.555.554v1.11c0 .307.248.554.555.554h4.785a.553.553 0 0 0 .555-.554v-1.11a.553.553 0 0 0-.555-.554h-4.785Zm-7.085.154c-.263 0-.474.197-.474.443v6.696c0 .245.211.444.474.444h4.947c.262 0 .473-.198.473-.444V9.217c0-.246-.211-.443-.473-.443H5.96Zm7.017 2.432c-.262 0-.473.198-.473.443v6.697c0 .245.211.443.473.443h4.948c.262 0 .473-.198.473-.444V11.65c0-.245-.211-.443-.473-.443h-4.948Zm-6.95 5.518a.553.553 0 0 0-.555.554v1.11c0 .307.248.555.555.555h4.785a.553.553 0 0 0 .555-.555v-1.11a.553.553 0 0 0-.555-.554H6.027Z"/>
@@ -56,10 +218,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-capstone_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Capstone Team"
-                        >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Capstone Team"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M4 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7.29 11.07A6.99 6.99 0 0 0 4 17H2a2.006 2.006 0 0 1-2-2v-2a3.009 3.009 0 0 1 3-3h2a2.999 2.999 0 0 1 2.29 1.07ZM20 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM24 13v2a2.006 2.006 0 0 1-2 2h-2a6.99 6.99 0 0 0-3.29-5.93A3 3 0 0 1 19 10h2a3.009 3.009 0 0 1 3 3ZM12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM18 17v1a3.01 3.01 0 0 1-3 3H9a3.01 3.01 0 0 1-3-3v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5Z"/>
@@ -69,9 +231,9 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-capstone_titles'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Capstone Titles"
+  data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Capstone Titles"
                         >
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -82,10 +244,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-documents'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Documents"
-                        >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Documents"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M23.719 11.18a2.007 2.007 0 0 0-1.724-.94H6.078c-.79 0-1.507.444-1.829 1.133L.039 20.2c.159.646.763 1.13 1.482 1.13h16.934a1.91 1.91 0 0 0 1.71-1.058l3.638-7.294a1.84 1.84 0 0 0-.084-1.799Z"/><path d="M3.394 10.015c.322-.688 1.04-1.133 1.829-1.133H20.21V6.965c0-.79-.667-1.434-1.486-1.434h-8.74a.047.047 0 0 1-.025-.005L8.396 3.338a1.502 1.502 0 0 0-1.223-.62H1.486C.666 2.719 0 3.363 0 4.153v12.979l3.394-7.116Z"/>
@@ -95,9 +257,9 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-add_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Add Teams">
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Add Teams">
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 11.613a4.597 4.597 0 1 0-.001-9.193 4.597 4.597 0 0 0 0 9.193Z"/><path d="M17.408 4.163c-.063 0-.121.015-.183.018.46.844.721 1.81.721 2.836a5.93 5.93 0 0 1-1.743 4.202c.379.134.78.22 1.205.22a3.638 3.638 0 0 0 0-7.276Z"/><path d="M12 11.613a4.597 4.597 0 1 0-.001-9.193 4.597 4.597 0 0 0 0 9.193ZM4.218 16.757c0-1.52.536-2.936 1.446-4.065a4.97 4.97 0 0 1-1.932-.81A4.068 4.068 0 0 0 1.5 15.51v.582c0 .433.304.808.73.89.602.115 1.267.217 1.988.29v-.516Z"/><path d="M6.054 7.016c0-1.026.26-1.992.72-2.835-.061-.003-.12-.018-.183-.018a3.638 3.638 0 0 0 0 7.276c.425 0 .827-.087 1.206-.22a5.927 5.927 0 0 1-1.743-4.203ZM19.183 13.598a4.65 4.65 0 0 1 3.276 1.349 4.072 4.072 0 0 0-2.191-3.065 4.985 4.985 0 0 1-1.932.811c.232.288.44.595.62.917.076-.004.15-.012.227-.012ZM14.517 18.265a4.67 4.67 0 0 1 3.041-4.369 5.165 5.165 0 0 0-2.321-1.898 5.908 5.908 0 0 1-6.476 0 5.145 5.145 0 0 0-3.195 4.76v.734c0 .549.385 1.02.923 1.124 1.536.294 3.396.523 5.51.523a29.1 29.1 0 0 0 2.583-.121 4.804 4.804 0 0 1-.065-.753Z"/><path d="M19.186 14.947a3.316 3.316 0 0 0 0 6.63 3.316 3.316 0 0 0 0-6.63Zm1.134 3.993h-.46v.46a.675.675 0 0 1-1.35 0v-.46h-.46a.675.675 0 0 1 0-1.35h.46v-.46a.675.675 0 0 1 1.35 0v.46h.46a.675.675 0 0 1 0 1.35Z"/>
@@ -107,10 +269,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/imacs-profile'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Profile"
-                            >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Profile"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0a6.335 6.335 0 0 0-6.328 6.328A6.335 6.335 0 0 0 12 12.656a6.335 6.335 0 0 0 6.328-6.328A6.335 6.335 0 0 0 12 0ZM19.873 16.79c-1.732-1.759-4.029-2.727-6.467-2.727h-2.812c-2.438 0-4.735.968-6.467 2.727a9.222 9.222 0 0 0-2.674 6.507c0 .388.315.703.703.703h19.688a.703.703 0 0 0 .703-.703c0-2.445-.95-4.756-2.674-6.507Z"/>
@@ -121,10 +283,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
 
                 <?php if ($_SESSION['is_admin']): ?>
                     <button onclick="window.location.href='/admin-manage'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Manage Account"
-                            >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Manage Account"
+>
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M14.827 19.49a1.43 1.43 0 0 1-.61.135H4.093c-.8 0-1.45-.649-1.45-1.45 0-1.66.674-3.16 1.76-4.249a5.986 5.986 0 0 1 4.25-1.76h1.003c.606 0 1.192.09 1.743.256l-.005.009a1.29 1.29 0 0 0 .474 1.766l.138.08a4.852 4.852 0 0 0 0 .965l-.138.08a1.29 1.29 0 0 0-.474 1.766l.676 1.17c.23.398.66.647 1.12.647.226 0 .45-.06.646-.174l.138-.08c.262.188.543.35.837.483v.16c0 .066.005.131.015.195ZM9.154 10.886a3.255 3.255 0 1 0 0-6.51 3.255 3.255 0 0 0 0 6.51Z"/><path d="m21.197 16.175-.737-.426a3.805 3.805 0 0 0 0-1.98l.737-.425a.308.308 0 0 0 .113-.42l-.675-1.17a.308.308 0 0 0-.421-.113l-.737.425a3.82 3.82 0 0 0-1.715-.99v-.85a.308.308 0 0 0-.308-.308h-1.35a.308.308 0 0 0-.307.307v.85a3.798 3.798 0 0 0-1.715.992l-.737-.426a.308.308 0 0 0-.421.113l-.676 1.17a.308.308 0 0 0 .114.42l.737.426a3.81 3.81 0 0 0 0 1.979l-.738.426a.308.308 0 0 0-.113.42l.676 1.17a.308.308 0 0 0 .42.113l.738-.426a3.82 3.82 0 0 0 1.715.991v.85c0 .17.137.308.307.308h1.35c.17 0 .308-.138.308-.307v-.85a3.799 3.799 0 0 0 1.715-.992l.737.426a.308.308 0 0 0 .42-.113l.676-1.17a.308.308 0 0 0-.113-.42Zm-4.418.139a1.555 1.555 0 1 1 0-3.11 1.555 1.555 0 0 1 0 3.11Z"/>
@@ -136,10 +298,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
 
                 <?php if ($_SESSION['is_coordinator']): ?>
                     <button onclick="window.location.href='/research-coor-manage_roles'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Manage Roles"
-                            >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Manage Roles"
+>
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M14.827 19.49a1.43 1.43 0 0 1-.61.135H4.093c-.8 0-1.45-.649-1.45-1.45 0-1.66.674-3.16 1.76-4.249a5.986 5.986 0 0 1 4.25-1.76h1.003c.606 0 1.192.09 1.743.256l-.005.009a1.29 1.29 0 0 0 .474 1.766l.138.08a4.852 4.852 0 0 0 0 .965l-.138.08a1.29 1.29 0 0 0-.474 1.766l.676 1.17c.23.398.66.647 1.12.647.226 0 .45-.06.646-.174l.138-.08c.262.188.543.35.837.483v.16c0 .066.005.131.015.195ZM9.154 10.886a3.255 3.255 0 1 0 0-6.51 3.255 3.255 0 0 0 0 6.51Z"/><path d="m21.197 16.175-.737-.426a3.805 3.805 0 0 0 0-1.98l.737-.425a.308.308 0 0 0 .113-.42l-.675-1.17a.308.308 0 0 0-.421-.113l-.737.425a3.82 3.82 0 0 0-1.715-.99v-.85a.308.308 0 0 0-.308-.308h-1.35a.308.308 0 0 0-.307.307v.85a3.798 3.798 0 0 0-1.715.992l-.737-.426a.308.308 0 0 0-.421.113l-.676 1.17a.308.308 0 0 0 .114.42l.737.426a3.81 3.81 0 0 0 0 1.979l-.738.426a.308.308 0 0 0-.113.42l.676 1.17a.308.308 0 0 0 .42.113l.738-.426a3.82 3.82 0 0 0 1.715.991v.85c0 .17.137.308.307.308h1.35c.17 0 .308-.138.308-.307v-.85a3.799 3.799 0 0 0 1.715-.992l.737.426a.308.308 0 0 0 .42-.113l.676-1.17a.308.308 0 0 0-.113-.42Zm-4.418.139a1.555 1.555 0 1 1 0-3.11 1.555 1.555 0 0 1 0 3.11Z"/>
@@ -149,10 +311,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     </button>
 
                     <button onclick="window.location.href='/research-coor-set_schedules'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Set Schedules"
-                            >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Set Schedules"
+>
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12.502 10.593c-.732 0-1.419.285-1.936.802a2.74 2.74 0 0 0 0 3.87 2.74 2.74 0 0 0 3.871 0 2.74 2.74 0 0 0 0-3.87 2.715 2.715 0 0 0-1.935-.802Z"/><path d="M20.643 2.848h-1.97V2.72a.703.703 0 0 0-1.406 0v.128h-4.062V2.72a.703.703 0 0 0-1.407 0v.128H7.736V2.72a.703.703 0 0 0-1.406 0v.128H4.359c-1.93 0-3.5 1.57-3.5 3.499v13.137c0 1.93 1.57 3.5 3.5 3.5h16.284c1.93 0 3.5-1.57 3.5-3.5V6.346c-.002-1.93-1.57-3.498-3.5-3.498Zm-3.166 11.105a.25.25 0 0 1-.186.242l-.807.216a4.088 4.088 0 0 1-.402.973l.417.723a.25.25 0 0 1-.04.302l-.88.88a.25.25 0 0 1-.302.04l-.723-.418a4.08 4.08 0 0 1-.971.4l-.217.81a.25.25 0 0 1-.242.184H11.88a.25.25 0 0 1-.242-.185l-.217-.809a4.114 4.114 0 0 1-.97-.4l-.724.418a.25.25 0 0 1-.302-.04l-.88-.88a.25.25 0 0 1-.04-.302l.417-.723a4.057 4.057 0 0 1-.402-.973l-.807-.216a.25.25 0 0 1-.185-.242v-1.245a.25.25 0 0 1 .185-.242l.807-.216c.092-.341.226-.666.403-.973l-.417-.723a.25.25 0 0 1 .04-.302l.88-.88a.25.25 0 0 1 .302-.04l.723.417a4.06 4.06 0 0 1 .973-.403l.216-.807a.25.25 0 0 1 .242-.185h1.245a.25.25 0 0 1 .241.185l.217.807c.341.092.666.227.972.403l.724-.417a.25.25 0 0 1 .301.04l.88.88a.25.25 0 0 1 .04.302l-.417.723c.176.307.311.632.404.973l.806.216a.25.25 0 0 1 .186.242v1.245h-.003Z"/>
@@ -160,30 +322,16 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                         </span>
                         <span class="label label-hidden">Set Schedules</span>
                     </button>
-
-                    <button onclick="window.location.href='/research-coor-view_schedules'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Set Schedules"
-                            >
-                        <span class="icon">
-                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.502 10.593c-.732 0-1.419.285-1.936.802a2.74 2.74 0 0 0 0 3.87 2.74 2.74 0 0 0 3.871 0 2.74 2.74 0 0 0 0-3.87 2.715 2.715 0 0 0-1.935-.802Z"/><path d="M20.643 2.848h-1.97V2.72a.703.703 0 0 0-1.406 0v.128h-4.062V2.72a.703.703 0 0 0-1.407 0v.128H7.736V2.72a.703.703 0 0 0-1.406 0v.128H4.359c-1.93 0-3.5 1.57-3.5 3.499v13.137c0 1.93 1.57 3.5 3.5 3.5h16.284c1.93 0 3.5-1.57 3.5-3.5V6.346c-.002-1.93-1.57-3.498-3.5-3.498Zm-3.166 11.105a.25.25 0 0 1-.186.242l-.807.216a4.088 4.088 0 0 1-.402.973l.417.723a.25.25 0 0 1-.04.302l-.88.88a.25.25 0 0 1-.302.04l-.723-.418a4.08 4.08 0 0 1-.971.4l-.217.81a.25.25 0 0 1-.242.184H11.88a.25.25 0 0 1-.242-.185l-.217-.809a4.114 4.114 0 0 1-.97-.4l-.724.418a.25.25 0 0 1-.302-.04l-.88-.88a.25.25 0 0 1-.04-.302l.417-.723a4.057 4.057 0 0 1-.402-.973l-.807-.216a.25.25 0 0 1-.185-.242v-1.245a.25.25 0 0 1 .185-.242l.807-.216c.092-.341.226-.666.403-.973l-.417-.723a.25.25 0 0 1 .04-.302l.88-.88a.25.25 0 0 1 .302-.04l.723.417a4.06 4.06 0 0 1 .973-.403l.216-.807a.25.25 0 0 1 .242-.185h1.245a.25.25 0 0 1 .241.185l.217.807c.341.092.666.227.972.403l.724-.417a.25.25 0 0 1 .301.04l.88.88a.25.25 0 0 1 .04.302l-.417.723c.176.307.311.632.404.973l.806.216a.25.25 0 0 1 .186.242v1.245h-.003Z"/>
-                            </svg>
-                        </span>
-                        <span class="label label-hidden">View Schedules</span>
-                    </button>
-
                 <?php endif; ?>
 
             <?php endif; ?>
 
             <?php if ($_SESSION['is_student']) : ?>
                 <button onclick="window.location.href='/student-home'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                    data-bs-toggle="tooltip" 
-                    data-bs-placement="right" 
-                    title="Home"
-                    >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Home"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="m23.353 10.439-.002-.002-9.79-9.79A2.194 2.194 0 0 0 12 0c-.59 0-1.145.23-1.563.647L.652 10.432l-.01.01a2.212 2.212 0 0 0 .004 3.12 2.197 2.197 0 0 0 1.534.648h.39v7.204A2.589 2.589 0 0 0 5.156 24h3.83a.703.703 0 0 0 .704-.703v-5.649c0-.65.529-1.18 1.18-1.18h2.259c.65 0 1.18.53 1.18 1.18v5.649c0 .388.314.703.702.703h3.83a2.589 2.589 0 0 0 2.587-2.586V14.21h.361c.59 0 1.145-.23 1.563-.648.86-.86.86-2.261 0-3.123Z" />
@@ -193,10 +341,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>
 
                 <button onclick="window.location.href='/student-dashboard'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Dashboard"
-                        >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Dashboard"
+>
                     <span class="icon">
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M6.02 2.75a3.306 3.306 0 0 0-3.293 3.293v11.913A3.306 3.306 0 0 0 6.02 21.25h11.956a3.306 3.306 0 0 0 3.294-3.294V6.043a3.306 3.306 0 0 0-3.294-3.294H6.02Zm0 1.813h11.956c.835 0 1.477.645 1.477 1.48v.273H4.543v-.273c0-.835.642-1.48 1.477-1.48Zm-1.477 3.57h14.91v9.823c0 .835-.642 1.48-1.477 1.48H6.02a1.455 1.455 0 0 1-1.477-1.48V8.133Zm8.502.487a.553.553 0 0 0-.555.554v1.11c0 .307.248.554.555.554h4.785a.553.553 0 0 0 .555-.554v-1.11a.553.553 0 0 0-.555-.554h-4.785Zm-7.085.154c-.263 0-.474.197-.474.443v6.696c0 .245.211.444.474.444h4.947c.262 0 .473-.198.473-.444V9.217c0-.246-.211-.443-.473-.443H5.96Zm7.017 2.432c-.262 0-.473.198-.473.443v6.697c0 .245.211.443.473.443h4.948c.262 0 .473-.198.473-.444V11.65c0-.245-.211-.443-.473-.443h-4.948Zm-6.95 5.518a.553.553 0 0 0-.555.554v1.11c0 .307.248.555.555.555h4.785a.553.553 0 0 0 .555-.555v-1.11a.553.553 0 0 0-.555-.554H6.027Z"/>
@@ -207,10 +355,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
 
                 <?php if ($isInTeam): ?>
                     <button onclick="window.location.href='/student-capstone_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                            data-bs-toggle="tooltip" 
-                            data-bs-placement="right" 
-                            title="Capstone Team"
-                            >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Capstone Team"
+>
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M4 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7.29 11.07A6.99 6.99 0 0 0 4 17H2a2.006 2.006 0 0 1-2-2v-2a3.009 3.009 0 0 1 3-3h2a2.999 2.999 0 0 1 2.29 1.07ZM20 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM24 13v2a2.006 2.006 0 0 1-2 2h-2a6.99 6.99 0 0 0-3.29-5.93A3 3 0 0 1 19 10h2a3.009 3.009 0 0 1 3 3ZM12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM18 17v1a3.01 3.01 0 0 1-3 3H9a3.01 3.01 0 0 1-3-3v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5Z"/>
@@ -220,10 +368,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     </button>
 
                     <button onclick="window.location.href='/student-upload'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Upload">
 
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Upload">
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M16.953 6.938c1.562.167 3.133.23 4.703.191l-.004-.006A25.224 25.224 0 0 0 14.609.061a35.74 35.74 0 0 0 .192 4.726c.12 1.037 1.115 2.032 2.152 2.15ZM19.223 14.445a4.778 4.778 0 1 0 0 9.555 4.778 4.778 0 0 0 0-9.555Zm2.287 4.688a.655.655 0 0 1-.928 0l-.703-.704v3.166a.657.657 0 0 1-1.312 0v-3.163l-.704.703a.656.656 0 1 1-.928-.928l1.824-1.823a.656.656 0 0 1 .928 0l1.823 1.823a.656.656 0 0 1 0 .928v-.002Z"/><path d="M21.699 8.383a37.303 37.303 0 0 1-4.88-.197h-.01c-.782-.09-1.548-.478-2.163-1.091-.615-.614-1-1.38-1.091-2.162v-.011a37.24 37.24 0 0 1-.199-4.906A56.62 56.62 0 0 0 5.98.32C4.343.51 2.774 2.08 2.583 3.716c-.429 4.015-.429 11.47 0 15.485.19 1.636 1.76 3.205 3.396 3.395 2.778.297 5.575.389 8.366.273a6.11 6.11 0 0 1-.89-5.61h-6.54a.657.657 0 0 1 0-1.312h7.171a6.162 6.162 0 0 1 2.059-1.982h-9.23a.656.656 0 1 1 0-1.313h10.172a.657.657 0 0 1 .656.657v.004a6.14 6.14 0 0 1 3.975.351 110 110 0 0 0-.019-5.28Zm-7.892 2.288h-6.89a.656.656 0 0 1 0-1.313h6.89a.656.656 0 1 1 0 1.313Z"/>
@@ -233,11 +381,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     </button>
 
                     <button onclick="window.location.href='/student-request_schedule'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="right" 
-                        title="Schedule"
-                        >
-
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Schedule"
+>
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.215 3.818a2.473 2.473 0 0 0-2.47-2.47h-.495v2.021a.674.674 0 0 1-1.348 0V1.348h-2.964v2.021a.674.674 0 0 1-1.348 0V1.348H8.625v2.021a.674.674 0 0 1-1.348 0V1.348H4.312v2.021a.674.674 0 0 1-1.347 0V1.348H2.47A2.474 2.474 0 0 0 0 3.818V5.84h20.215V3.818Z"/><path d="M4.313.674a.674.674 0 0 0-1.348 0v.674h1.348V.674ZM17.25.674a.674.674 0 0 0-1.348 0v.674h1.348V.674ZM12.938.674a.674.674 0 0 0-1.348 0v.674h1.348V.674ZM8.625.674a.674.674 0 0 0-1.348 0v.674h1.348V.674ZM18.059 11.77a6.26 6.26 0 0 1 2.156.38V7.187H0v10.108c0 1.115.907 2.021 2.021 2.021h9.875a6.296 6.296 0 0 1 6.163-7.547Zm-2.516-2.224h1.123a.674.674 0 0 1 0 1.348h-1.123a.674.674 0 1 1 0-1.348Zm-3.998 0h1.123a.674.674 0 0 1 0 1.348h-1.123a.674.674 0 0 1 0-1.348Zm-6.873 7.412H3.549a.674.674 0 0 1 0-1.348h1.123a.674.674 0 1 1 0 1.348Zm0-3.032H3.549a.674.674 0 0 1 0-1.348h1.123a.674.674 0 0 1 0 1.348Zm3.998 3.032H7.547a.674.674 0 0 1 0-1.348H8.67a.674.674 0 1 1 0 1.348Zm0-3.032H7.547a.674.674 0 0 1 0-1.348H8.67a.674.674 0 0 1 0 1.348Zm0-3.032H7.547a.674.674 0 0 1 0-1.348H8.67a.674.674 0 0 1 0 1.348Zm2.201 2.358c0-.372.302-.674.674-.674h1.123a.674.674 0 0 1 0 1.348h-1.123a.674.674 0 0 1-.674-.674Z"/><path d="M18.059 13.117a4.947 4.947 0 0 0-4.942 4.942A4.947 4.947 0 0 0 18.06 23 4.947 4.947 0 0 0 23 18.059a4.947 4.947 0 0 0-4.941-4.942Zm2.246 5.615h-2.246a.674.674 0 0 1-.674-.673v-2.247a.674.674 0 0 1 1.347 0v1.573h1.573a.674.674 0 0 1 0 1.347Z"/>
@@ -245,12 +392,11 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                         </span>
                         <span class="label label-hidden">Schedule</span>
                     </button>
-                    
                 <?php else: ?>
                     <button onclick="window.location.href='/student-no_team'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                    data-bs-toggle="tooltip" 
-                    data-bs-placement="right" 
-                    title="Teams">
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Teams">
                         <span class="icon">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M4 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7.29 11.07A6.99 6.99 0 0 0 4 17H2a2.006 2.006 0 0 1-2-2v-2a3.009 3.009 0 0 1 3-3h2a2.999 2.999 0 0 1 2.29 1.07ZM20 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM24 13v2a2.006 2.006 0 0 1-2 2h-2a6.99 6.99 0 0 0-3.29-5.93A3 3 0 0 1 19 10h2a3.009 3.009 0 0 1 3 3ZM12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM18 17v1a3.01 3.01 0 0 1-3 3H9a3.01 3.01 0 0 1-3-3v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5Z"/>
@@ -261,10 +407,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 <?php endif; ?>
                 
                 <button onclick="window.location.href='/student-profile'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                    data-bs-toggle="tooltip" 
-                    data-bs-placement="right" 
-                    title="Profile"
-                    >
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Profile"
+>
                     <span class="icon">
                         <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0a6.335 6.335 0 0 0-6.328 6.328A6.335 6.335 0 0 0 12 12.656a6.335 6.335 0 0 0 6.328-6.328A6.335 6.335 0 0 0 12 0ZM19.873 16.79c-1.732-1.759-4.029-2.727-6.467-2.727h-2.812c-2.438 0-4.735.968-6.467 2.727a9.222 9.222 0 0 0-2.674 6.507c0 .388.315.703.703.703h19.688a.703.703 0 0 0 .703-.703c0-2.445-.95-4.756-2.674-6.507Z"/>
@@ -275,9 +421,10 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
             <?php endif; ?>
 
             <button onclick="window.location.href='/logout'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
-                data-bs-toggle="tooltip" 
-                data-bs-placement="right" 
-                title="Logout">
+data-bs-toggle="tooltip" 
+  data-bs-placement="right" 
+  title="Logout"
+>
                 <span class="icon">
                     <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M11.826 20.178v1.196a2.56 2.56 0 0 1-1.309 2.266c-.4.231-.845.36-1.308.36-.463 0-.909-.129-1.309-.36l-5.318-3.07a2.56 2.56 0 0 1-1.309-2.267V2.617A2.62 2.62 0 0 1 3.891 0h11.712a2.62 2.62 0 0 1 2.618 2.617v3.307a.86.86 0 0 1-1.719 0V2.617a.9.9 0 0 0-.898-.898H5.34l5.177 2.99a2.56 2.56 0 0 1 1.309 2.265V18.46h3.777a.9.9 0 0 0 .9-.899v-2.898a.86.86 0 1 1 1.718 0v2.898a2.62 2.62 0 0 1-2.617 2.618h-3.778Zm7.963-9.23-.946.947a.86.86 0 0 0 1.215 1.215l2.413-2.414a.859.859 0 0 0 0-1.215l-2.413-2.413a.86.86 0 0 0-1.215 1.215l.946.946h-6.34a.86.86 0 1 0 0 1.72h6.34v-.001Z"/>
@@ -289,69 +436,77 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
         <?php endif; ?>
     </nav>                  
 </div>
+  <!-- Main Content -->
+  <main class="flex-grow-1 p-4">
+    <h1 class="h4 fw-bold mb-3">Dummy Sidebar Navigation</h1>
+    <p class="text-muted">Toggle the sidebar to test expansion behavior with text labels.</p>
+  </main>
 
-<?php require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchUser.php'; ?>
+  <!-- Bootstrap JS (for any potential future use) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Sidebar Toggle Script -->
-<script>
+  <!-- Sidebar Toggle Script -->
+  <script>
     const sidebar = document.getElementById("sidebar");
 
     function toggleSidebar() {
-        sidebar.classList.toggle("sidebar-expanded");
-        sidebar.classList.toggle("sidebar-collapsed");
+      sidebar.classList.toggle("sidebar-expanded");
+      sidebar.classList.toggle("sidebar-collapsed");
 
-        document.querySelectorAll(".label").forEach(label => {
-            label.classList.toggle("label-visible");
-            label.classList.toggle("label-hidden");
-        });
-        }
-</script>
-
-<script>
-    let tooltips = [];
-
-    function initializeTooltips() {
-        // Destroy any existing tooltips
-        tooltips.forEach(t => t.dispose());
-
-        // Re-initialize only those needed
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        tooltips = [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
+      document.querySelectorAll(".label").forEach(label => {
+        label.classList.toggle("label-visible");
+        label.classList.toggle("label-hidden");
+      });
     }
+  </script>
+  
+  <script>
+  let tooltips = [];
 
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const labels = sidebar.querySelectorAll('.label');
-        const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
-        sidebar.classList.toggle('sidebar-expanded', !isCollapsed);
+  function initializeTooltips() {
+    // Destroy any existing tooltips
+    tooltips.forEach(t => t.dispose());
 
-        // Show or hide labels
-        labels.forEach(label => {
-        label.classList.toggle('label-hidden', isCollapsed);
-        label.classList.toggle('label-visible', !isCollapsed);
-        });
+    // Re-initialize only those needed
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips = [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
+  }
 
-        // Enable tooltips only when sidebar is collapsed
-        tooltips.forEach(t => {
-        if (isCollapsed) {
-            t.enable();
-        } else {
-            t.disable();
-        }
-        });
-    }
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const labels = sidebar.querySelectorAll('.label');
+    const isCollapsed = sidebar.classList.toggle('sidebar-collapsed');
+    sidebar.classList.toggle('sidebar-expanded', !isCollapsed);
 
-    // Initialize tooltips after DOM load
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeTooltips();  // Only needed once at page load
+    // Show or hide labels
+    labels.forEach(label => {
+      label.classList.toggle('label-hidden', isCollapsed);
+      label.classList.toggle('label-visible', !isCollapsed);
     });
+
+    // Enable tooltips only when sidebar is collapsed
+    tooltips.forEach(t => {
+      if (isCollapsed) {
+        t.enable();
+      } else {
+        t.disable();
+      }
+    });
+  }
+
+  // Initialize tooltips after DOM load
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeTooltips();  // Only needed once at page load
+  });
 </script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Enable Bootstrap tooltips
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-        new bootstrap.Tooltip(el);
-    });
+  // Enable Bootstrap tooltips
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+    new bootstrap.Tooltip(el);
+  });
 </script>  
+  
+</body>

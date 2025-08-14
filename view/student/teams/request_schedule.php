@@ -225,14 +225,18 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     <h3>Schedule for <span id="modalDate"></span></h3>
                     <p>Request Form for Defense.</p>
                     <form id="scheduleForm" method="POST">
+                    <input type="hidden" id="modalDateInput">
 
-                        <input type="hidden" id="modalDate">
+                    <div class="mb-3">
+                        <label for="timestart" class="form-label">Time:</label>
+                        <input type="time" class="form-control" name="timestart" id="timestart">
+                    </div>
 
-                        <label>Time:</label>
-                        <input type="time" name="timestart" id="timestart"> <br>
+                    <input type="hidden" name="team_id" value="<?php echo htmlspecialchars($teamId); ?>" id="team_id">
 
-                        <input type="hidden" name="team_id" value ="<?php echo htmlspecialchars($teamId); ?>""id="team_id">
-                        <button onclick="reqSchedule()">Submit</button>
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-primary" onclick="reqSchedule()">Submit</button>
+                    </div>
                     </form>
                 </div>
             </div>

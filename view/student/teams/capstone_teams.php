@@ -165,6 +165,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeamData.php';
                         You are not currently assigned to any team. Please contact your administrator to be added to a team.
                     </div>
                 <?php endif; ?>
+                
                 <!-- Modal -->
                 <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-fullscreen modal-dialog-centered">

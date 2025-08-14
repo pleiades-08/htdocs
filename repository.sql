@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2025 at 10:56 AM
+-- Generation Time: Aug 14, 2025 at 06:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -53,20 +53,12 @@ CREATE TABLE `def_dates` (
 --
 
 INSERT INTO `def_dates` (`id`, `defense_date`) VALUES
-(1, '2025-08-06'),
-(2, '2025-08-07'),
-(3, '2025-08-08'),
-(4, '2025-08-10'),
-(5, '2025-08-11'),
-(6, '2025-08-12'),
-(7, '2025-08-13'),
-(8, '2025-08-14'),
-(9, '2025-08-15'),
-(10, '2025-08-16'),
-(13, '2025-08-20'),
-(14, '2025-08-21'),
-(12, '2025-08-22'),
-(11, '2025-08-23');
+(1, '2025-08-09'),
+(2, '2025-08-10'),
+(3, '2025-08-11'),
+(4, '2025-08-12'),
+(5, '2025-08-13'),
+(6, '2025-08-14');
 
 -- --------------------------------------------------------
 
@@ -139,7 +131,10 @@ INSERT INTO `document_feedback` (`feedback_id`, `document_id`, `reviewer_id`, `c
 (7, 1, 5, 'asdfsdfdsf', 'asdfsdf', 'asdfsdfsdf', 'Proposal', 'approved', '2025-07-31 07:09:14', '2025-07-31 07:09:14'),
 (8, 5, 7, 'asdasd', 'asds', 'asdasdads', 'Proposal', 'approved-major', '2025-08-04 12:06:19', '2025-08-04 12:06:19'),
 (9, 7, 5, 'qwe', 'qwe', 'qwe', 'Proposal', 'approved', '2025-08-05 07:38:50', '2025-08-05 07:38:50'),
-(10, 7, 5, '123123', '12321', '123123', 'Proposal', 'approved', '2025-08-05 07:39:43', '2025-08-05 07:39:43');
+(10, 7, 5, '123123', '12321', '123123', 'Proposal', 'approved', '2025-08-05 07:39:43', '2025-08-05 07:39:43'),
+(11, 1, 4, '123', '123', '123', 'Proposal', 'approved', '2025-08-08 11:25:42', '2025-08-08 11:25:42'),
+(12, 11, 3, '1232132', '1231231232', '123123213213', 'Proposal', 'approved', '2025-08-09 07:15:48', '2025-08-09 07:15:48'),
+(13, 1, 3, 'sfagergerg', 'egreg', 'aegergergre', 'Proposal', 'approved', '2025-08-09 07:22:31', '2025-08-09 07:22:31');
 
 -- --------------------------------------------------------
 
@@ -159,7 +154,7 @@ CREATE TABLE `request_dates` (
 --
 
 INSERT INTO `request_dates` (`request_id`, `team_id`, `def_date`, `def_time`) VALUES
-(9, 1, '2025-08-08', '17:12:00');
+(9, 1, '2025-08-09', '17:12:00');
 
 -- --------------------------------------------------------
 
@@ -221,7 +216,7 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`team_id`, `team_name`, `capstone_title`, `capstone_type`, `adviser_id`, `technical_id`, `chairperson_id`, `panelist_id`, `major_id`, `minor_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Catering Management Group', 'Catering Management for Jandices Catering Services', 'Title Proposal', 5, 14, 7, 15, 5, 4, 'Active', '2025-07-24 04:07:53', '2025-08-08 06:40:32'),
+(1, 'Catering Management Group', 'Catering Management for Jandices Catering Services', 'Title Proposal', 5, 14, 7, 15, 5, 4, 'Active', '2025-07-24 04:07:53', '2025-08-10 11:02:18'),
 (2, 'Repository Team', 'Development of Repository System for IMACS in KLD', 'Title Proposal', 5, 4, 5, 15, 7, 14, 'Active', '2025-07-28 05:47:33', '2025-08-04 11:38:05'),
 (3, 'Hotel Management System', 'Development of Hotel Management System', 'Title Proposal', 5, 7, 5, 4, 14, 15, 'Active', '2025-07-28 05:49:51', '2025-08-05 06:25:00'),
 (4, '3d Mapping', '3d Mapping in Kolehiyo ng lungsod ng Dasma ', 'Title Proposal', 5, 4, 5, 15, 7, 14, 'Active', '2025-07-28 06:06:32', '2025-08-06 13:28:02');
@@ -282,7 +277,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `first_name`, `middle_name`, `last_name`, `status_`, `dept`, `user_type`, `school_id`, `specialization`, `created_at`, `updated_at`) VALUES
-(3, 'user', 'pass', 'admin@gmail.com', 'John Mc ', 'Estanol', 'Villamor', 'active', 'BSIS', 'admin', 'KLD-22-000401', NULL, '2025-07-09 13:35:29', '2025-08-03 10:45:37'),
+(3, 'user', 'pass', 'admin@gmail.com', 'John Mc ', 'Estanol', 'Villamor', 'active', 'BSIS', 'admin', 'KLD-22-000401', NULL, '2025-07-09 13:35:29', '2025-08-09 09:19:56'),
 (4, 'user2', 'pass', 'mcvilla1@kld.edu.ph', 'James Albert', 'Esta', 'VIllamor', 'active', 'BSIS', 'coordinator', 'KLD-22-000402', NULL, '2025-07-09 13:35:29', '2025-08-03 16:08:36'),
 (5, 'user3', 'pass', 'usersample@kld.edu.ph', 'Reggregor', 'Bautista', 'Villas', 'active', 'IMACS', 'faculty', 'KLD-22-000444', 'MIT', '2025-07-09 13:36:40', '2025-07-09 13:36:40'),
 (6, 'user4', 'pass', 'jjj@kld.edu.ph', 'John Jelmer', 'Paldo', 'Datu', 'active', 'BSIS', 'student', 'KLD-22-000411', NULL, '2025-07-09 14:27:08', '2025-07-09 14:27:08'),
@@ -390,7 +385,7 @@ ALTER TABLE `capstone_phases`
 -- AUTO_INCREMENT for table `def_dates`
 --
 ALTER TABLE `def_dates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `documents`
@@ -402,13 +397,13 @@ ALTER TABLE `documents`
 -- AUTO_INCREMENT for table `document_feedback`
 --
 ALTER TABLE `document_feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `request_dates`
 --
 ALTER TABLE `request_dates`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `system_settings`

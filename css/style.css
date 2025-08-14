@@ -8,7 +8,6 @@ font-family: "Poppins", sans-serif;
 body {
   margin: 0;
   padding: 0;
-  --sb-width: 5rem;
   background-image: url('../assets/img/kldbg.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -273,6 +272,13 @@ form#teamForm {
   border: solid 1px #74c476;
 }
 
+.form-check .form-check-input {
+    float: left;
+    margin-left: -1.5em;
+    border: #74c476 1px;
+
+}
+
 
 
 .add-acc {
@@ -513,3 +519,4 @@ text-decoration: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
+

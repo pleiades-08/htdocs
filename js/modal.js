@@ -25,10 +25,7 @@ var feedbackForm = document.getElementById("feedbackForm");
 
     // When the user clicks the "Submit" button (which now opens the modal)
     openBtn.onclick = function(event) {
-    // Prevent the form from submitting immediately
-    // No need for event.preventDefault() here as the button type is "button"
 
-    // Populate the modal with current form values
     modalComments.textContent = commentsInput.value || "No comments entered.";
     modalSuggestions.textContent = suggestionsInput.value || "No suggestions entered.";
     modalRevisions.textContent = revisionsInput.value || "No revisions required.";

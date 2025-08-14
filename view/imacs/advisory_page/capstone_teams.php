@@ -162,14 +162,12 @@ if ($teamd !== null) {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <a href="#"
-                            class="btn btn-sm btn-info open-modal-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#teamModal"
-                            data-team-id="<?= htmlspecialchars($team['team_id']) ?>"
-                            data-url="/imacs-capstone_eval?td=<?= urlencode($team['team_id']) ?>">
-                            View
-                        </a>
+                            <a href="#" 
+                                class="btn btn-primary btn-info" 
+                                id="modalViewBtn" 
+                                target="_blank">
+                                View
+                            </a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -220,13 +218,15 @@ if ($teamd !== null) {
                                     </td>
                                     <?php if ($is_adviser): ?>
                                         <td>
-                                            <a href="#" 
-                                                class="btn btn-sm btn-info open-modal-btn" 
-                                                data-bs-toggle="modal" 
+                                            <a href="#"
+                                                class="btn btn-sm btn-info open-modal-btn"
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#teamModal"
-                                                data-team-id="<?= htmlspecialchars($team['team_id']) ?>">
+                                                data-team-id="<?= htmlspecialchars($team['team_id']) ?>"
+                                                data-url="/imacs-capstone_eval?td=<?= urlencode($team['team_id']) ?>">
                                                 View
                                             </a>
+
                                         </td>
                                     <?php endif; ?>
                                 </tr>
@@ -245,6 +245,23 @@ if ($teamd !== null) {
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/view_team.js"></script>
+    <script>
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('.open-modal-btn');
+            if (!btn) return;
+
+            const teamId = btn.dataset.teamId;
+            const url = btn.dataset.url; // You already set this in your HTML
+
+            console.log("Team ID:", teamId);
+            console.log("URL:", url);
+
+            // Update modal "View" button link
+            document.getElementById('modalViewBtn').href = url;
+        });
+
+
+    </script>
 
 </body>
 </html>
