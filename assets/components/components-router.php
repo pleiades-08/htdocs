@@ -5,7 +5,7 @@ class ComponentRouter {
     'header' => '../assets/components/header.php', //header component
     'sidebar' => '../assets/components/sidebar.php', //sidebar component
     'navbar' => '../assets/components/navbar.php', //navbar component for student
-    'fnavbar' => '../assets/components/fnavbar.php', //navbar component for faculty
+    'eval_fields' => '../assets/components/eval_fields.php', //navbar component for faculty
     'anavbar' => '../assets/components/anavbar.php', //navbar component for admin
   ];
 

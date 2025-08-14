@@ -84,9 +84,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
             <div class="comment-sections">
                 <form method="POST" id="feedbackForm"> 
                 <div id="feedbackMessage"></div>
-                <div class="evalcon">
-
-                    <center><h4 id="evalhead">Comments, Suggestions and Revisions</h4></center>
+                    <div class="evalcon">
+                        <center><h4 id="evalhead">Comments, Suggestions and Revisions</h4></center>
                         <button class="accordion chapter" type="button">
                             <h3>Rationale</h3> <span class="chevron">&#x25BC;</span>
                         </button>
@@ -107,43 +106,46 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
                             </div>
                         </div>
                         <input type="hidden" name="chapter_no" id="chapter_no" value="Proposal">
-                </div>
-                <div class="evalcon evalbtn">
-                    <label for="status"><h3>Status: </h3></label>
-                    <div class="buttons">
-                        <select id="remarks" name="remarks">
-                            <option value="approved">Approved</option>
-                            <option value="approved-minor">Approved with Minor Revision</option>
-                            <option value="approved-major">Approved with Major Revision</option>
-                            <option value="retitle">Retitle</option>
-                            <option value="declined">Declined</option>
-                        </select>
-                            <input type="hidden" name="fileName" id="filename" value="<?= htmlspecialchars($fileName ?? 'N/A') ?>">
-                            <input type="hidden" name="document_id" id="documentId" value="<?= htmlspecialchars($document_id ?? '') ?>">
-                            <input type="hidden" name="user_id" id="reviewerId" value="<?= htmlspecialchars($reviewer_id ?? '') ?>">
+                    </div>
 
-                            <button id="openModalBtn" class="evalbtns btnctm" type="button">Submit</button>
-                            <button class="evalbtns btnctm2" type="button"><a href="/imacs-documents">Cancel</a></button>
+                    <div class="evalcon evalbtn">
+                        <label for="status"><h3>Status: </h3></label>
+                        <div class="buttons">
+                            <select id="remarks" name="remarks">
+                                <option value="approved">Approved</option>
+                                <option value="approved-minor">Approved with Minor Revision</option>
+                                <option value="approved-major">Approved with Major Revision</option>
+                                <option value="retitle">Retitle</option>
+                                <option value="declined">Declined</option>
+                            </select>
+                                <input type="hidden" name="fileName" id="filename" value="<?= htmlspecialchars($fileName ?? 'N/A') ?>">
+                                <input type="hidden" name="document_id" id="documentId" value="<?= htmlspecialchars($document_id ?? '') ?>">
+                                <input type="hidden" name="user_id" id="reviewerId" value="<?= htmlspecialchars($reviewer_id ?? '') ?>">
+
+                                <button id="openModalBtn" class="evalbtns btnctm" type="button">Submit</button>
+                                <button class="evalbtns btnctm2" type="button"><a href="/imacs-documents">Cancel</a></button>
+                        </div>
                     </div>
-                </div>
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                    <span class="close-button">&times;</span>
-                    <h2>Review Your Feedback</h2>
-                    <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
-                    <div id="ModalfeedbackMessage"></div>
-                    <br>
-                    <h4>Comments:</h4>
-                    <p id="modalComments"></p> <h4>Suggestions:</h4>
-                    <p id="modalSuggestions"></p> <h4>Revisions:</h4>
-                    <p id="modalRevisions"></p> <h4>Status:</h4>
-                    <p id="modalStatus"></p> 
-                    <button class="evalbtns btnctm" type="button" id="confirmSubmit">Confirm and Submit</button>
+
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h2>Review Your Feedback</h2>
+                        <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
+                        <div id="ModalfeedbackMessage"></div>
+                        <br>
+                        <h4>Comments:</h4>
+                        <p id="modalComments"></p> <h4>Suggestions:</h4>
+                        <p id="modalSuggestions"></p> <h4>Revisions:</h4>
+                        <p id="modalRevisions"></p> <h4>Status:</h4>
+                        <p id="modalStatus"></p> 
+                        <button class="evalbtns btnctm" type="button" id="confirmSubmit">Confirm and Submit</button>
+                        </div>
                     </div>
-                </div>
+
                 </form>        
             <!-- Previous Evaluation Section with AJAX -->
-                <div class="evalcon evalcon2" style="margin: 30px 0 30px 0;">
+                <div class="evalcon evalcon2">
                     <h4>Previous Evaluation</h4>
                     <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
 
@@ -163,6 +165,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
                             <option value="Capstone 2">Capstone 2</option>
                         </select>
 
+                        
                         <table id="results">
                             <tr>
                                 <th>Comments:</th>
@@ -184,13 +187,15 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
                         <table>
                             <tr>
                                 <th>Status:</th>
-                                <td id="remarksTD" class="loading">Select an evaluation type to view details.</td>
+                                <td id="remarksTd" class="loading">
+                                    Select an evaluation type to view details.
+                                </td>
                             </tr>
                         </table>
                     </div>
                 </div>
 
-                <div class="evalcon evalcon2" style="margin: 30px 0 30px 0;">
+                <div class="evalcon evalcon2">
                 <h4>Team information:</h4>
                     <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
                     <div class="container-t">
@@ -346,7 +351,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
         setTimeout(() => {
             document.getElementById('comment-history-placeholder').style.display = 'none';
             document.getElementById('actual-comment-history').style.display = 'block';
-        }, 3000); // 1 second delay
+        }, 1000); // 1 second delay
     });
 </script>
         

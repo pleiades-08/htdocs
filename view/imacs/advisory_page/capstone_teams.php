@@ -19,8 +19,7 @@ $query = "
         t.capstone_type,
         CONCAT(a.first_name, ' ', a.last_name) AS adviser_name,
         GROUP_CONCAT(
-            CONCAT(m.first_name, ' ', m.last_name, 
-                    CASE WHEN tm.role = 'leader' THEN ' (Leader)' ELSE '' END)
+            CONCAT(m.first_name, ' ', m.last_name)
             SEPARATOR ', '
         ) AS members
     FROM teams t
@@ -95,25 +94,13 @@ if ($teamd !== null) {
         <title>IMACS FACULTY | WORKSPACE</title>
 </head>
     <style>
-        .table-container {
-            margin: 30px auto;
-            max-width: 1200px;
-        }
-        .team-title {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-        .leader {
-            font-weight: bold;
-            color: #0d6efd;
-        }
         .custome-modal-width{
             max-width: 800px;
         }
     </style>
 <body>
     
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
 
     <main class="flex-grow-1 p-4">
@@ -208,11 +195,7 @@ if ($teamd !== null) {
                                         <?php 
                                         $members = explode(', ', $team['members']);
                                         foreach ($members as $member) {
-                                            if (strpos($member, '(Leader)') !== false) {
-                                                echo '<span class="leader">' . htmlspecialchars($member) . '</span>,<br>';
-                                            } else {
-                                                echo htmlspecialchars($member) . '<br>';
-                                            }
+                                            echo htmlspecialchars($member) . '<br>';
                                         }
                                         ?>
                                     </td>

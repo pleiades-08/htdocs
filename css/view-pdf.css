@@ -213,6 +213,10 @@ margin: 0;
 border-radius: 0 0 5px 5px;
 }
 
+.evalcon{
+  margin-bottom: 10px;
+  
+}
 .evalcon textarea {
   width: 100%;
   min-height: 80px;
@@ -249,7 +253,12 @@ font-weight:700;
 margin-bottom:20px;
 } 
 
-.evalbtn {display: flex;flex-direction: row;gap: 20px;flex-wrap: wrap;justify-content: space-evenly;margin: 30px 0 30px 0;}
+.evalbtn {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;}
 
 .evalbtn label{
 font-size:30px;
@@ -589,4 +598,5 @@ margin-bottom: 0;
 
 .comment-sections {
     overflow-x: auto;
+    gap: 10px;
 }

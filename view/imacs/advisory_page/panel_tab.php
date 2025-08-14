@@ -17,7 +17,7 @@ require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchDefenseDates.php';
 </head>
 <body>
 
-<?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
 <br>
 
 <main class="flex-grow-1 p-4">

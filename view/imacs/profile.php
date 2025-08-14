@@ -12,7 +12,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 </head>
 <body>    
     
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
 
     

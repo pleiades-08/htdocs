@@ -94,6 +94,19 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                     <span class="label label-hidden">Documents</span>
                 </button>
 
+                <button onclick="window.location.href='/imacs-panel_tab'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="right" 
+                        title="Documents"
+                        >
+                    <span class="icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.719 11.18a2.007 2.007 0 0 0-1.724-.94H6.078c-.79 0-1.507.444-1.829 1.133L.039 20.2c.159.646.763 1.13 1.482 1.13h16.934a1.91 1.91 0 0 0 1.71-1.058l3.638-7.294a1.84 1.84 0 0 0-.084-1.799Z"/><path d="M3.394 10.015c.322-.688 1.04-1.133 1.829-1.133H20.21V6.965c0-.79-.667-1.434-1.486-1.434h-8.74a.047.047 0 0 1-.025-.005L8.396 3.338a1.502 1.502 0 0 0-1.223-.62H1.486C.666 2.719 0 3.363 0 4.153v12.979l3.394-7.116Z"/>
+                        </svg>
+                    </span>
+                    <span class="label label-hidden">Panel Tab</span>
+                </button>
+
                 <button onclick="window.location.href='/imacs-add_teams'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
                             data-bs-toggle="tooltip" 
                             data-bs-placement="right" 

@@ -1,6 +1,7 @@
 <?php 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/actions/db.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
 
 ?>
 
@@ -16,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
     <title>Document</title>
 </head>
 <body>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <main class="flex-grow-1 p-4">
         <div class="content-page ">
             <a href="/imacs-capstone_teams"><h2 class="mb-4">Your Advised Team</h2></a>
@@ -141,12 +142,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
                                                 </small>
                                             </div>
                                         </div>
-                                        <button 
-                                            class="btn btn-sm btn-outline-primary view-pdf-btn" 
-                                            data-file="<?= htmlspecialchars($doc['file_path']) ?>"
-                                            data-bs-toggle="modal" data-bs-target="#myModal">
-                                            VIEW
-                                        </button>
+                                            <a href="/controllers/fetchLocationController.php?
+                                            id=<?= urlencode($fetch['user_id']) ?>&
+                                            td=<?= urlencode($_GET['td']) ?>" class="btn btn-sm btn-info">
+                                                View
+                                            </a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -283,6 +283,52 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
                                                             <button class="evalbtns btnctm2" type="button"><a href="/imacs-capstone_eval?td=<?= htmlspecialchars($teamData['team_id'] ?? '') ?>">Cancel</a></button>
                                                     </div>
                                                 </div>
+                                                <div class="evalcon evalcon2" style="margin: 30px 0 30px 0;">
+                                                    <h4>Previous Evaluation</h4>
+                                                    <hr style="border: 0; height: 2px; background: #74c476; margin: 20px 0;">
+
+                                                    <!-- Placeholder while loading comment history -->
+                                                    <div id="comment-history-placeholder" class="placeholder-glow mb-3">
+                                                        <p class="placeholder col-12 placeholder-lg"></p>
+                                                        <p class="placeholder col-12 placeholder-lg"></p>
+                                                        <p class="placeholder col-12 placeholder-lg"></p>
+                                                    </div>
+
+                                                    <div id="actual-comment-history" style="display: none;">
+                                                        <p class="text-sm text-gray-500 mt-4"><strong>Document: </strong><span id="fileNameDisplay"><?= htmlspecialchars($fileName ?? 'N/A') ?></span></p>
+                                                        <select id="history" name="history_chapter" onchange="showEval(this.value)">
+                                                            <option value="">-- Select Evaluation Type --</option>
+                                                            <option value="Proposal">Title Proposal</option>
+                                                            <option value="Capstone 1">Capstone 1</option>
+                                                            <option value="Capstone 2">Capstone 2</option>
+                                                        </select>
+
+                                                        <table id="results">
+                                                            <tr>
+                                                                <th>Comments:</th>
+                                                                <td id="commentsTd" class="loading">Select an evaluation type to view details.</td>
+                                                            </tr>
+                                                        </table>
+                                                        <table>
+                                                            <tr>
+                                                                <th>Suggestions:</th>
+                                                                <td id="suggestionsTd" class="loading">Select an evaluation type to view details.</td>
+                                                            </tr>
+                                                        </table>
+                                                        <table>
+                                                            <tr>
+                                                                <th>Revisions:</th>
+                                                                <td id="revisionsTd" class="loading">Select an evaluation type to view details.</td>
+                                                            </tr>
+                                                        </table>
+                                                        <table>
+                                                            <tr>
+                                                                <th>Status:</th>
+                                                                <td id="remarksTD" class="loading">Select an evaluation type to view details.</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -298,5 +344,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchTeam.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/accordion.js"></script>
     <script src="/js/insert_feedback.js"></script>
+    <script>
+    // Simulate loading delay (adjust to actual AJAX call timing)
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('comment-history-placeholder').style.display = 'none';
+            document.getElementById('actual-comment-history').style.display = 'block';
+        }, 3000); // 1 second delay
+    });
+</script>
 </body>
 </html>

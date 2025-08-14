@@ -520,3 +520,71 @@ text-decoration: none;
     overflow: hidden;
 }
 
+.evalcon2 th{
+padding:10px;
+background:#74c476;
+color:white;
+width:130px;
+border:1px solid #74c476;
+}
+
+.evalcon2 table {
+margin-bottom: 10px;
+max-height:200px!important;
+}
+
+
+.evalcon2 td {
+display:block;
+padding:20px 10px;
+border:1px solid #74c476;
+max-height:200px!important;
+overflow-y:auto;
+}
+
+.evalcon2 select {
+margin-bottom:10px;
+border:2px solid #74c476;
+padding-left:5px;
+padding-right:10px;
+border-radius:5px;
+}
+.loading {
+color: #666;
+font-style: italic;
+padding: 10px;
+}
+
+.no-data {
+color: #6c757d;
+font-style: italic;
+padding: 10px;
+}
+
+#history {
+margin: 10px 0;
+padding: 8px;
+border: 1px solid #ddd;
+border-radius: 4px;
+}
+
+.evalcon2 table {
+margin: 10px 0;
+width: 100%;
+border-collapse: collapse;
+}
+
+.evalcon2 th {
+background: #74C476;
+padding: 10px;
+text-align: left;
+border: 1px solid #dee2e6;
+width: 150px;
+}
+
+.evalcon2 td {
+padding: 10px;
+border: 1px solid #dee2e6;
+vertical-align: top;
+min-height: 50px;
+}

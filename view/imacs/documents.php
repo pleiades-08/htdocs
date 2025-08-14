@@ -1,7 +1,7 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . './controllers/fetchDocumentsController.php';
-require $_SERVER['DOCUMENT_ROOT'] . './actions/verify-users.php';
-require $_SERVER['DOCUMENT_ROOT'] . './controllers/searchDocuments.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchDocumentsController.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/controllers/searchDocuments.php';
 
 try{
 
@@ -40,7 +40,7 @@ try{
 </head>
 <body>
     
-    <?php include $_SERVER['DOCUMENT_ROOT'] . './assets/components/sidebar.php'; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/assets/components/sidebar.php'; ?>
     <br>
 
     <main class="flex-grow-1 p-4">
@@ -77,10 +77,10 @@ try{
                                         <td><?= $row['version'] ?></td>
                                         <td><?= $row['status'] ?></td>
                                         <td>
-                                        <a href="../../controllers/fetchLocationController.php?&progress=<?= urlencode($row['capstone_type']) ?>&file=<?= htmlspecialchars(urlencode($row['file_path'])) ?>&id=<?= urldecode($fetch['user_id'])?> &name=<?= urldecode($row['document_name'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
-                                            View
-                                        </a></td>
-                                    </td>
+                                            <a href="/controllers/fetchLocationController.php?&id=<?= urldecode($fetch['user_id'])?>&td=<?= urldecode($row['team_id'])?>" class="btn btn-sm btn-info">
+                                                View
+                                            </a>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
