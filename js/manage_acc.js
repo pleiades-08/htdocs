@@ -120,4 +120,7 @@ function openModal() {
     } else {
         label.textContent = 'Department:';
     }
-    }
+}
+
+
+

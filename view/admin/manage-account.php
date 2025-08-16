@@ -85,51 +85,72 @@ require $_SERVER['DOCUMENT_ROOT'] . '/actions/verify-users.php';
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
             </div>
-            <h3 style="padding: 30px">Active Accounts List</h3>
-            <table class="table table-striped table-hover mb-4 data_table" style="width: 100%;" id="activeTable">
-                <div id="alertContainer" class="mt-3"></div>
-                <thead>
-                <tr>
-                    <th style="width: 20px;">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkAllActive" class="form-check-input">
+
+            <div class="card shadow-sm w-100">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Active Accounts List
+                </div>
+                <div class="card-body p-0 w-100">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 " id="activeTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkAllActive" class="form-check-input">
+                                        </div>
+                                    </th>
+                                    <th scope="col" style="width: auto;" data-column="school_id" data-order="desc" data-label="ID"> ID <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="fullname" data-order="desc" data-label="Name"> Name  <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="user_type" data-order="desc" data-label="Type"> Type  <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="dept" data-order="desc" data-label="Department"> Department <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="status_" data-order="desc" data-label="Status"> Status <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeTable">
+                                
+                            </tbody>
+                        </table>
                     </div>
-                    </th>
-                    <th data-column="school_id" data-order="desc" data-label="ID" style="width: auto;">ID ▼</th>
-                    <th data-column="fullname" data-order="desc" data-label="Name" style="width: auto;">Name ▼</th>
-                    <th data-column="user_type" data-order="desc" data-label="Type" style="width: auto;">Type ▼</th>
-                    <th data-column="dept" data-order="desc" data-label="Department" style="width: auto;">Department ▼</th>
-                    <th data-column="status_" data-order="desc" data-label="Status" style="width: auto;">Status ▼</th>
-                    <th style="width: auto;">Action</th>
-                </tr>
-                </thead>
+                    <nav>
+                        <ul id="activePagination" class="pagination justify-content-center"></ul>
+                    </nav>
+                </div>
+            </div>
 
-                <tbody id="activeTable">
-                    <!-- Active accounts will be populated here by JavaScript -->
-                </tbody>
-            </table>
-
-            <h3 style="padding: 30px">Inactive Accounts List</h3>
-            <table class="table table-striped table-hover mb-4 data_table" style="width: 100%;" id="inactiveTable">
-                <thead>
-                    <tr>
-                        <th style="width: 20px;">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="checkAllInactive">
-                            </div>
-                        </th>
-                        <th data-column="school_id" data-order="desc" data-label="ID" style="width: 80px;">ID ▼</th>
-                        <th data-column="fullname" data-order="desc" data-label="Name" style="width: 300px;">Name ▼</th>
-                        <th data-column="user_type" data-order="desc" data-label="Type" style="width: 50px;">Type ▼</th>
-                        <th data-column="dept" data-order="desc" data-label="Department" style="width: 50px;">Department ▼</th>
-                        <th data-column="status_" data-order="desc" data-label="Status" style="width: 100px;">Status ▼</th>
-                        <th style="width: 200px;">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="inactiveTable">
-                    <!-- Inactive accounts will be populated here by JavaScript -->
-                </tbody>
-            </table>
+            <div class="card shadow-sm w-100 h-50">
+                <div class="card-header bg-primary text-white fw-bold">
+                    Inactive Accounts List
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="inactiveTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkAllInactive">
+                                        </div>
+                                    </th>
+                                    <th scope="col" style="width: auto;" data-column="school_id" data-order="desc" data-label="ID"> ID <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="fullname" data-order="desc" data-label="Name"> Name  <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="user_type" data-order="desc" data-label="Type"> Type  <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="dept" data-order="desc" data-label="Department"> Department <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" data-column="status_" data-order="desc" data-label="Status"> Status <span class="sort-arrow">▼</span> </th>
+                                    <th scope="col" style="width: auto;" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inactiveTable">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav>
+                        <ul id="inactivePagination" class="pagination justify-content-center"></ul>
+                    </nav>
+                </div>
+            </div>
 
             <!-- Modal Add User Form -->
             <div id="userModal" class="modal">

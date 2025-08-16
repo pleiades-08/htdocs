@@ -276,7 +276,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchReviewer.php';
                             <!-- Example Row 8 (if you need another single piece of data) -->
                             <div class="table-row">
                                 <div class="header-cell">Project Status:</div>
-                                <div class="data-cell">In Progress</div>
+                                <div class="data-cell"><?= htmlspecialchars($teamData['capstone_type']) ?></div>
                             </div>
 
                             <div class="table-title">VERSIONS </div>

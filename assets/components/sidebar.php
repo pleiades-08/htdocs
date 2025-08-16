@@ -24,7 +24,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
         </svg>
     </button>
 
-    <nav class="d-flex flex-column mt-3 gap-2 px-2">
+    <nav class="d-flex flex-column mt-3 gap-2 px-2 h-100 mb-1">
         <?php if ($_SESSION['user_role']) : ?>
             
             <?php if ($_SESSION['is_faculty']) : ?>
@@ -287,7 +287,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/controllers/fetchStudentTeam.php';
                 </button>    
             <?php endif; ?>
 
-            <button onclick="window.location.href='/logout'" class="btn d-flex align-items-center gap-3 text-white fw-bold"
+            <button onclick="window.location.href='/logout'" class="btn d-flex align-items-center gap-3 text-white fw-bold mt-auto"
                 data-bs-toggle="tooltip" 
                 data-bs-placement="right" 
                 title="Logout">
